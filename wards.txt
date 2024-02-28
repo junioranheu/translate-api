@@ -12,7 +12,7 @@ cd NomeDoProjeto.API
 dotnet build
 dotnet run
 
-// Adicionar referências;
+// Adicionar referências entre as camadas;
 API > Application, Domain, Infrastructure
 dotnet add reference ../NomeDoProjeto.Application/NomeDoProjeto.Application.csproj ../NomeDoProjeto.Domain/NomeDoProjeto.Domain.csproj ../NomeDoProjeto.Infrastructure/NomeDoProjeto.Infrastructure.csproj
 
@@ -28,5 +28,5 @@ dotnet add reference ../NomeDoProjeto.Domain/NomeDoProjeto.Domain.csproj
 UnitTests > Application, Infrastructure 
 dotnet add reference ../NomeDoProjeto.Application/NomeDoProjeto.Application.csproj ../NomeDoProjeto.Infrastructure/NomeDoProjeto.Infrastructure.csproj
 
- // Tutorial arquitetura CQRS;
- https://balta.io/blog/aspnet-core-cqrs-mediator
+// Tutorial arquitetura CQRS;
+https://balta.io/blog/aspnet-core-cqrs-mediator

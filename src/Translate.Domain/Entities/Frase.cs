@@ -1,9 +1,9 @@
-using Translate.Domain.Enums;
+﻿using Translate.Domain.Enums;
 using static Translate.Utils.Fixtures.Get;
 
 namespace Translate.Domain.Entities;
 
-public class Frase(string conteudo, IdiomasEnum idioma)
+public sealed class Frase(string conteudo, IdiomasEnum idioma)
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
     public string Conteudo { get; private set; } = conteudo;

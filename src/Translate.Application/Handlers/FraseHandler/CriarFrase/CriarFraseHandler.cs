@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Translate.Application.Commands.Frase.CriarFrase;
 
-namespace Translate.Application.Handlers.Frase.CriarFrase;
+namespace Translate.Application.Handlers.FraseHandler.CriarFrase;
 
 public class CriarFraseHandler : IRequestHandler<CriarFraseRequest, CriarFraseResponse>
 {

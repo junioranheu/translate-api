@@ -1,8 +1,9 @@
 ﻿using MediatR;
 using Translate.Application.Commands.Frase.ObterFrase;
 using Translate.Domain.Enums;
+using Translate.Domain.Entities;
 
-namespace Translate.Application.Handlers.Frase.ObterFrase;
+namespace Translate.Application.Handlers.FraseHandler.ObterFrase;
 
 public class ObterFraseHandler : IRequestHandler<ObterFraseRequest, ObterFraseResponse>
 {
@@ -18,10 +19,12 @@ public class ObterFraseHandler : IRequestHandler<ObterFraseRequest, ObterFraseRe
         // TODO: Lógica de leitura se houver;
 
         // Retorna o resultado;
-        //return _repository.Obter(command.Id);
+        // return _repository.Obter(command.Id);
 
-        var frase = new Domain.Entities.Frase(conteudo: "22", idioma: IdiomasEnum.BR);
-        var result = new ObterFraseResponse() { 
+        var frase = new Frase(conteudo: "22", idioma: IdiomasEnum.BR);
+
+        var result = new ObterFraseResponse()
+        {
             Conteudo = frase.Conteudo,
             Idioma = frase.Idioma,
             QtdCaracteres = frase.QtdCaracteres,

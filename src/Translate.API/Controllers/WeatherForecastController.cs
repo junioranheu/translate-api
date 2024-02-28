@@ -14,6 +14,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("Obter")]
     public string Obter()
     {
+        string aea = SistemaConst
         return "Teste";
     }
 }

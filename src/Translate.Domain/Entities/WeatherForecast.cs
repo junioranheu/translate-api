@@ -1,4 +1,4 @@
-namespace Translate.API;
+namespace Translate.Domain.Entities;
 
 public class WeatherForecast
 {

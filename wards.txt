@@ -4,11 +4,20 @@
 // Criar uma biblioteca de classes;
  dotnet new classlib -n NomeDoProjeto.Application
  dotnet new classlib -n NomeDoProjeto.Domain
+ dotnet new classlib -n NomeDoProjeto.Infrastructure
+ dotnet new classlib -n NomeDoProjeto.Utils
 
 // Executar aplicação;
- cd [nome da aplicação]
+ cd NomeDoProjeto.API
  dotnet build
  dotnet run
+
+// Adicionar referências;
+ API > Application, Domain, Infrastructure
+ Application > Domain, Infrastructure
+ Domain > Utils
+ Infrastructure > Domain
+ UnitTests > Application, Infrastructure 
 
  // Tutorial;
   https://balta.io/blog/aspnet-core-cqrs-mediator

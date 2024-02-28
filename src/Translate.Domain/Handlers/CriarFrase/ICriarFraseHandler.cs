@@ -1,5 +1,5 @@
+using Translate.Domain.Handlers.CriarFase.Commands.Responses;
 using Translate.Domain.Handlers.CriarFrase.Commands.Requests;
-using Translate.Domain.Handlers.CriarFrase.Commands.Responses;
 
 namespace Translate.Domain.Handlers.CriarFrase;
 

@@ -4,4 +4,4 @@ A ideia inicial era criar uma API em .NET 8 estritamente utilizando APENAS o VS 
 
 Depois passei pro VS do MacOS: péssimo. Às vezes congela, e não dá nem pra coiar & colar (lol).
 
-Mas enfim, terminei a API no PC mesmo. Queria seguir o tutorial da arquitetura CQRS do Balta
+Mas enfim, terminei a API no PC mesmo. No final das contas, esse projeto foi super útil porque também... segui o tutorial da <b>arquitetura CQRS com MediatR</b> do Balta. E também, claro, o bendito <b>Docker</b>.

@@ -1,9 +1,7 @@
 ﻿using MediatR;
-using Translate.Domain.Entities;
-using Translate.Domain.Handlers.CriarFase.Commands.Responses;
-using Translate.Domain.Handlers.CriarFrase.Commands.Requests;
+using Translate.Application.Commands.Frase.CriarFrase;
 
-namespace Translate.Domain.Handlers.CriarFrase;
+namespace Translate.Application.Handlers.Frase.CriarFrase;
 
 public class CriarFraseHandler : IRequestHandler<CriarFraseRequest, CriarFraseResponse>
 {
@@ -21,7 +19,7 @@ public class CriarFraseHandler : IRequestHandler<CriarFraseRequest, CriarFraseRe
         // Aplicar Fail Fast Validations;
 
         // Cria a entidade;
-        var frase = new Frase(conteudo: command.Conteudo, idioma: command.Idioma);
+        var frase = new Domain.Entities.Frase(conteudo: command.Conteudo, idioma: command.Idioma);
 
         //// Persiste a entidade no banco;
         //_repository.Save(customer);

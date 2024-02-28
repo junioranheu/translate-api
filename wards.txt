@@ -1,28 +1,32 @@
 // Criar nova API;
- dotnet new webapi -n NomeDoProjeto.API -controllers
+dotnet new webapi -n NomeDoProjeto.API -controllers
 
 // Criar uma biblioteca de classes;
- dotnet new classlib -n NomeDoProjeto.Application
- dotnet new classlib -n NomeDoProjeto.Domain
- dotnet new classlib -n NomeDoProjeto.Infrastructure
- dotnet new classlib -n NomeDoProjeto.Utils
+dotnet new classlib -n NomeDoProjeto.Application
+dotnet new classlib -n NomeDoProjeto.Domain
+dotnet new classlib -n NomeDoProjeto.Infrastructure
+dotnet new classlib -n NomeDoProjeto.Utils
 
 // Executar aplicação;
- cd NomeDoProjeto.API
- dotnet build
- dotnet run
+cd NomeDoProjeto.API
+dotnet build
+dotnet run
 
 // Adicionar referências;
- API > Application, Domain, Infrastructure
- dotnet add reference ../NomeDoProjeto.Application/NomeDoProjeto.Application.csproj ../NomeDoProjeto.Domain/NomeDoProjeto.Domain.csproj ../NomeDoProjeto.Infrastructure/NomeDoProjeto.Infrastructure.csproj
+API > Application, Domain, Infrastructure
+dotnet add reference ../NomeDoProjeto.Application/NomeDoProjeto.Application.csproj ../NomeDoProjeto.Domain/NomeDoProjeto.Domain.csproj ../NomeDoProjeto.Infrastructure/NomeDoProjeto.Infrastructure.csproj
 
- Application > Domain, Infrastructure
+Application > Domain, Infrastructure
+dotnet add reference ../NomeDoProjeto.Domain/NomeDoProjeto.Domain.csproj ../NomeDoProjeto.Infrastructure/NomeDoProjeto.Infrastructure.csproj
 
- Domain > Utils
+Domain > Utils
+dotnet add reference ../NomeDoProjeto.Utils/NomeDoProjeto.Utils.csproj
 
- Infrastructure > Domain
+Infrastructure > Domain
+dotnet add reference ../NomeDoProjeto.Domain/NomeDoProjeto.Domain.csproj
 
- UnitTests > Application, Infrastructure 
+UnitTests > Application, Infrastructure 
+dotnet add reference ../NomeDoProjeto.Application/NomeDoProjeto.Application.csproj ../NomeDoProjeto.Infrastructure/NomeDoProjeto.Infrastructure.csproj
 
- // Tutorial;
-  https://balta.io/blog/aspnet-core-cqrs-mediator
+ // Tutorial arquitetura CQRS;
+ https://balta.io/blog/aspnet-core-cqrs-mediator

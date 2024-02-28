@@ -10,10 +10,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
+    app.UseSwaggerUI(x =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Translate.API");
-        c.RoutePrefix = "";
+        x.SwaggerEndpoint("/swagger/v1/swagger.json", "Translate.API");
+        x.RoutePrefix = "";
     });
 }
 

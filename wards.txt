@@ -1,0 +1,10 @@
+// Criar nova API;
+ dotnet new webapi -n api-identity -controllers
+
+// Criar uma biblioteca de classes;
+ dotnet new classlib -n Identity.Application
+
+// Executar aplicação;
+ cd [nome da aplicação]
+ dotnet build
+ dotnet run

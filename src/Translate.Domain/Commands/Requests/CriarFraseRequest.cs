@@ -1,7 +1,7 @@
 using System;
 using Translate.Domain.Enums;
 
-namespace Translate.Domain.Commands;
+namespace Translate.Domain.Commands.Requests;
 
 public class CriarFraseRequest
 {

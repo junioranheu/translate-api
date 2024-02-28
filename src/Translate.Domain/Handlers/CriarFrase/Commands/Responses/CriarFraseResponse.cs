@@ -1,7 +1,7 @@
 using System;
 using Translate.Domain.Enums;
 
-namespace Translate.Domain.Commands.Responses;
+namespace Translate.Domain.Handlers.CriarFase.Commands.Responses;
 
 public class CriarFraseResponse
 {

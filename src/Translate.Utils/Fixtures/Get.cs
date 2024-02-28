@@ -13,4 +13,13 @@ public static class Get
         TimeZoneInfo timeZone = TZConvert.GetTimeZoneInfo("E. South America Standard Time");
         return TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZone);
     }
+
+    /// <summary>
+    /// Detalha em texto a data e hora atual;
+    /// </summary>
+    public static string ObterDetalhesDataHora()
+    {
+        DateTime horarioBrasilia = GerarHorarioBrasilia();
+        return $"{horarioBrasilia:dd/MM/yyyy} às {horarioBrasilia:HH:mm:ss}";
+    }
 }

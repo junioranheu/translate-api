@@ -1,23 +1,13 @@
-using System;
-using static Translate.Utils.Fixtures.Get;
 using Translate.Domain.Enums;
+using static Translate.Utils.Fixtures.Get;
 
 namespace Translate.Domain.Entities;
 
-public class Frase
+public class Frase(string conteudo, IdiomasEnum idioma)
 {
-    public Frase(string conteudo, IdiomasEnum idioma)
-    {
-        Id = Guid.NewGuid();
-        Conteudo = conteudo;
-        Idioma = idioma;
-        QtdCaracteres = conteudo.Length;
-        Data = GerarHorarioBrasilia();
-    }
-
-    public Guid Id { get; private set; }
-    public string Conteudo { get; private set; }
-    public IdiomasEnum Idioma { get; private set; }
-    public int QtdCaracteres { get; private set; }
-    public DateTime Data { get; private set; }
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public string Conteudo { get; private set; } = conteudo;
+    public IdiomasEnum Idioma { get; private set; } = idioma;
+    public int QtdCaracteres { get; private set; } = conteudo.Length;
+    public DateTime Data { get; private set; } = GerarHorarioBrasilia();
 }

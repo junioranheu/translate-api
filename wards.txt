@@ -14,9 +14,14 @@
 
 // Adicionar referências;
  API > Application, Domain, Infrastructure
+ dotnet add reference ../NomeDoProjeto.Application/NomeDoProjeto.Application.csproj ../NomeDoProjeto.Domain/NomeDoProjeto.Domain.csproj ../NomeDoProjeto.Infrastructure/NomeDoProjeto.Infrastructure.csproj
+
  Application > Domain, Infrastructure
+
  Domain > Utils
+
  Infrastructure > Domain
+
  UnitTests > Application, Infrastructure 
 
  // Tutorial;

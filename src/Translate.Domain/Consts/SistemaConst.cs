@@ -1,4 +1,4 @@
-namespace Translate.Domain;
+namespace Translate.Domain.Consts;
 
 public static class SistemaConst
 {

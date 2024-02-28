@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Translate.Domain.Consts;
 
 namespace Translate.API.Controllers;
 
@@ -14,7 +15,7 @@ public class WeatherForecastController : ControllerBase
     [HttpGet("Obter")]
     public string Obter()
     {
-        string aea = SistemaConst
-        return "Teste";
+        string aea = SistemaConst.NomeSistema;
+        return aea;
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using Translate.Domain.Consts;
 using Translate.Infrastructure.Data;
 using Translate.Infrastructure.Factory.ConnectionFactory;
+using Translate.Infrastructure.Repositories.Frases;
 
 namespace Translate.Infrastructure;
 
@@ -13,12 +14,18 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddDependencyInjectionInfrastructure(this IServiceCollection services, WebApplicationBuilder builder)
     {
+        AddRepositories(services);
         AddFactory(services);
         AddContext(services, builder);
         AddSwagger(services);
         AddCors(services, builder);
 
         return services;
+    }
+
+    private static void AddRepositories(IServiceCollection services)
+    {
+        services.AddScoped<IFraseRepository, FraseRepository>();
     }
 
     private static void AddFactory(IServiceCollection services)

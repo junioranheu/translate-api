@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Translate.Application.Commands.Frase.CriarFrase;
-using Translate.Application.Commands.Frase.ObterFrase;
+using Translate.Application.Commands.Frases.CriarFrase;
+using Translate.Application.Commands.Frases.ObterFrase;
 
 namespace Translate.API.Controllers;
 

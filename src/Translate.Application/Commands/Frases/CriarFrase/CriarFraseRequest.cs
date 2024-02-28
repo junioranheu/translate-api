@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Translate.Domain.Enums;
 
-namespace Translate.Application.Commands.Frase.CriarFrase;
+namespace Translate.Application.Commands.Frases.CriarFrase;
 
 public class CriarFraseRequest : IRequest<CriarFraseResponse>
 {

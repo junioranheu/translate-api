@@ -1,6 +1,6 @@
 ﻿using Translate.Domain.Enums;
 
-namespace Translate.Application.Commands.Frase.ObterFrase;
+namespace Translate.Application.Commands.Frases.ObterFrase;
 
 public class ObterFraseResponse
 {

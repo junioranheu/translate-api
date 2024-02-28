@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.ResponseCompression;
 using System.IO.Compression;
 using System.Text.Json.Serialization;
+using Translate.API.Filters;
 
 namespace Translate.API;
 
@@ -39,8 +40,8 @@ public static class DependencyInjection
     {
         services.AddControllers(x =>
         {
-            //x.Filters.Add<RequestFilter>();
-            //x.Filters.Add<ErrorFilter>();
+            // x.Filters.Add<RequestFilter>();
+            x.Filters.Add<ErrorFilter>();
         }).
             AddJsonOptions(x =>
             {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Translate.Application.Commands.Frase.ObterFrase;
+namespace Translate.Application.Commands.Frases.ObterFrase;
 
 public class ObterFraseRequest : IRequest<ObterFraseResponse>
 {

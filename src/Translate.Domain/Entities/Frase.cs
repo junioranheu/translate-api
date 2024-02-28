@@ -1,5 +1,5 @@
 ﻿using Translate.Domain.Enums;
-using static Translate.Utils.Fixtures.Get;
+using static junioranheu_utils_package.Fixtures.Get;
 
 namespace Translate.Domain.Entities;
 

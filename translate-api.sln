@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translate.Domain", "src\Tra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translate.Infrastructure", "src\Translate.Infrastructure\Translate.Infrastructure.csproj", "{B024B9D3-2A40-48AF-A9C6-4DF08C717B4A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Translate.Utils", "src\Translate.Utils\Translate.Utils.csproj", "{7BF1B92C-23A6-499D-9597-A5B397C16C96}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{B024B9D3-2A40-48AF-A9C6-4DF08C717B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B024B9D3-2A40-48AF-A9C6-4DF08C717B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B024B9D3-2A40-48AF-A9C6-4DF08C717B4A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7BF1B92C-23A6-499D-9597-A5B397C16C96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7BF1B92C-23A6-499D-9597-A5B397C16C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7BF1B92C-23A6-499D-9597-A5B397C16C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7BF1B92C-23A6-499D-9597-A5B397C16C96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

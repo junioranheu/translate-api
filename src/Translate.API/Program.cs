@@ -10,7 +10,7 @@ using Translate.Infrastructure;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddDependencyInjectionAPI();
-     builder.Services.AddDependencyInjectionApplication(builder);
+    builder.Services.AddDependencyInjectionApplication(builder);
     builder.Services.AddDependencyInjectionDomain();
     builder.Services.AddDependencyInjectionInfrastructure(builder);
 }

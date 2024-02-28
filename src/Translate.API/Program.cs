@@ -13,7 +13,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(x =>
     {
         x.SwaggerEndpoint("/swagger/v1/swagger.json", "Translate.API");
-        x.RoutePrefix = "";
+        // x.RoutePrefix = "";
     });
 }
 

@@ -1,10 +1,11 @@
-﻿using Translate.Domain.Entities;
+﻿using MediatR;
+using Translate.Domain.Entities;
 using Translate.Domain.Handlers.CriarFase.Commands.Responses;
 using Translate.Domain.Handlers.CriarFrase.Commands.Requests;
 
 namespace Translate.Domain.Handlers.CriarFrase;
 
-public class CriarFraseHandler : ICriarFraseHandler
+public class CriarFraseHandler : IRequestHandler<CriarFraseRequest, CriarFraseResponse>
 {
     //ICustomerRepository _repository;
     //IEmailService _emailService;
@@ -15,7 +16,7 @@ public class CriarFraseHandler : ICriarFraseHandler
     //    _emailService = emailService;
     //}
 
-    public CriarFraseResponse Handle(CriarFraseRequest command)
+    public Task<CriarFraseResponse> Handle(CriarFraseRequest command, CancellationToken cancellationToken)
     {
         // Aplicar Fail Fast Validations;
 
@@ -29,11 +30,13 @@ public class CriarFraseHandler : ICriarFraseHandler
         //_emailService.Send(customer.Name, customer.Email);
 
         // Retorna a resposta;
-        return new CriarFraseResponse
+        var result = new CriarFraseResponse
         {
             Conteudo = frase.Conteudo,
             Idioma = frase.Idioma,
             Data = frase.Data
         };
+
+        return Task.FromResult(result);
     }
 }

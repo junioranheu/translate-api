@@ -1,8 +1,8 @@
-using Translate.Domain.Enums;
+﻿using Translate.Domain.Enums;
 
-namespace Translate.Domain.Handlers.CriarFase.Commands.Responses;
+namespace Translate.Domain.Handlers.ObterFrase.Commands.Responses;
 
-public class CriarFraseResponse
+public class ObterFraseResponse
 {
     public string Conteudo { get; set; } = string.Empty;
     public IdiomasEnum Idioma { get; set; }

@@ -20,7 +20,7 @@ public class FraseController : ControllerBase
         string nomeSistema = SistemaConst.NomeSistema;
 
         var frase = new Frase(
-            conteudo: "XD",
+            conteudo: "XDXD",
             idioma: IdiomasEnum.BR
         );
 

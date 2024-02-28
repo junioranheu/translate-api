@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Translate.Domain.Consts;
 using Translate.Domain.Entities;
+using Translate.Domain.Enums;
 
 namespace Translate.API.Controllers;
 
@@ -17,7 +18,11 @@ public class FraseController : ControllerBase
     public string Obter()
     {
         string nomeSistema = SistemaConst.NomeSistema;
-        var frase = new Frase("XD");
+
+        var frase = new Frase(
+            conteudo: "XD",
+            idioma: IdiomasEnum.BR
+        );
 
         return $"{nomeSistema}{frase.Id}";
     }

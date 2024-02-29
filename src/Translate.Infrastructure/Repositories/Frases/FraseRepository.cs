@@ -36,6 +36,7 @@ public class FraseRepository(TranslateContext context) : IFraseRepository
 
     public async Task<Frase?> Obter(Guid id)
     {
+        // TO DO: REQUEST E AI VE CADA ITEM QUE FOI PREENCHIDO E FAZ O WHERE;
         return await _context.Frases.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
     }
 

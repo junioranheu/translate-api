@@ -7,7 +7,7 @@ namespace Translate.Infrastructure.Repositories.Frases
         Task Atualizar(Guid id);
         Task<Frase> Criar(Frase input);
         Task Deletar(Guid id);
-        Task<Frase?> Obter(Guid id);
+        Task<Frase?> Obter(Frase input);
         Task<ICollection<Frase>> ObterTodos();
     }
 }

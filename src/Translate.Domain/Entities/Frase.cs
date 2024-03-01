@@ -1,13 +1,27 @@
-﻿using Translate.Domain.Enums;
-using static junioranheu_utils_package.Fixtures.Get;
+﻿using Translate.Domain.Consts;
+using Translate.Domain.Enums;
 
 namespace Translate.Domain.Entities;
 
-public sealed class Frase(string conteudo, IdiomasEnum idioma)
+public sealed class Frase
 {
-    public Guid Id { get; private set; } = Guid.NewGuid();
-    public string Conteudo { get; private set; } = conteudo;
-    public IdiomasEnum Idioma { get; private set; } = idioma;
-    public int QtdCaracteres { get; private set; } = conteudo.Length;
-    public DateTime Data { get; private set; } = GerarHorarioBrasilia();
+    public Frase(Guid id, string conteudo, IdiomasEnum idioma, DateTime data)
+    {
+        if (string.IsNullOrEmpty(conteudo))
+        {
+            throw new ArgumentException(SistemaConst.GerarMensagemErroVazio(nameof(conteudo)), nameof(conteudo));
+        }
+
+        Id = id;
+        Conteudo = conteudo;
+        Idioma = idioma;
+        QtdCaracteres = conteudo.Length;
+        Data = data;
+    }
+
+    public Guid Id { get; private set; }
+    public string Conteudo { get; private set; }
+    public IdiomasEnum Idioma { get; private set; }
+    public int QtdCaracteres { get; private set; }
+    public DateTime Data { get; private set; }
 }

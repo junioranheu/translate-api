@@ -13,7 +13,7 @@ namespace Translate.Infrastructure.Migrations
 {
     [DbContext(typeof(TranslateContext))]
     [Migration("20240229015937_first-migration")]
-    partial class firstmigration
+    partial class Firstmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Translate.Application.Commands.Frases.CriarFrase;
 using Translate.Infrastructure.Repositories.Frases;
+using static junioranheu_utils_package.Fixtures.Get;
 
 namespace Translate.Application.Handlers.Frases.CriarFrase;
 
@@ -10,8 +11,14 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
 
     public async Task<CriarFraseResponse> Handle(CriarFraseRequest command, CancellationToken cancellationToken)
     {
-        var frase = new Domain.Entities.Frase(conteudo: command.Conteudo, idioma: command.Idioma);
-        await _repository.Criar(frase);
+        var entidade = new Domain.Entities.Frase(
+            id: Guid.NewGuid(),
+            conteudo: command.Conteudo,
+            idioma: command.Idioma,
+            data: GerarHorarioBrasilia()
+        );
+
+        await _repository.Criar(entidade);
 
         //// Envia E-mail de boas-vindas;
         //_emailService.Send(customer.Name, customer.Email);
@@ -19,9 +26,9 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
         // Retorna a resposta;
         var result = new CriarFraseResponse
         {
-            Conteudo = frase.Conteudo,
-            Idioma = frase.Idioma,
-            Data = frase.Data
+            Conteudo = entidade.Conteudo,
+            Idioma = entidade.Idioma,
+            Data = entidade.Data
         };
 
         return result;

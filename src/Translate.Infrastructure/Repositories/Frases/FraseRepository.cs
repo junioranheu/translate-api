@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Translate.Domain.Entities;
 using Translate.Infrastructure.Data;
 
@@ -34,10 +35,16 @@ public class FraseRepository(TranslateContext context) : IFraseRepository
         return await _context.Frases.AsNoTracking().ToListAsync();
     }
 
-    public async Task<Frase?> Obter(Guid id)
+    public async Task<Frase?> Obter(Frase entidade)
     {
-        // TO DO: REQUEST E AI VE CADA ITEM QUE FOI PREENCHIDO E FAZ O WHERE;
-        return await _context.Frases.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+        var result = await _context.Frases.
+                     Where(x =>
+                        (entidade.Id == Guid.Empty || x.Id == entidade.Id) &&
+                        (entidade.Conteudo.IsNullOrEmpty() || x.Conteudo.Contains(entidade.Conteudo)) &&
+                        (!Enum.IsDefined(entidade.Idioma) || x.Idioma == entidade.Idioma)
+                     ).AsNoTracking().FirstOrDefaultAsync();
+
+        return result;
     }
 
     public async Task Atualizar(Guid id)

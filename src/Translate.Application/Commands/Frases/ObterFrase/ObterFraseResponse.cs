@@ -4,8 +4,8 @@ namespace Translate.Application.Commands.Frases.ObterFrase;
 
 public class ObterFraseResponse
 {
+    public Guid Id { get; set; }
     public string Conteudo { get; set; } = string.Empty;
     public IdiomasEnum Idioma { get; set; }
-    public int QtdCaracteres { get; set; }
     public DateTime Data { get; set; }
 }

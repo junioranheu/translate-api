@@ -15,7 +15,7 @@ public static class DependencyAppConfiguration
         using IServiceScope scope = app.Services.CreateScope();
         IServiceProvider services = scope.ServiceProvider;
 
-        await DBInitialize(app, services, isInitialize: true);
+        await DBInitialize(app, services, isInitialize: false);
         AddSwagger(app);
         AddHttpsRedirection(app);
         AddCors(app, builder);

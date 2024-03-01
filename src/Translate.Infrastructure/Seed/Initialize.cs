@@ -26,7 +26,7 @@ public static class DbInitializer
 
         if (isAplicarMigrations || isResetar)
         {
-            await Seed(context, GerarHorarioBrasilia());
+           await Seed(context, GerarHorarioBrasilia());
         }
     }
 

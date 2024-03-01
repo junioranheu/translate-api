@@ -7,20 +7,20 @@ namespace Translate.Domain.Entities;
 
 public sealed class UsuarioRole
 {
-    public UsuarioRole(Guid id, int usuarioId, UsuarioRoleEnum roleId, DateTime data)
+    public UsuarioRole(Guid usuarioRoleId, Guid usuarioId, UsuarioRoleEnum roleId, DateTime data)
     {
         ValidarParamsEntidade(GetType().Name, [usuarioId, roleId], nameof(usuarioId), nameof(roleId));
 
-        Id = id;
+        UsuarioRoleId = usuarioRoleId;
         UsuarioId = usuarioId;
         RoleId = roleId;
         Data = data;
     }
 
     [Key]
-    public Guid Id { get; private set; }
+    public Guid UsuarioRoleId { get; private set; }
 
-    public int UsuarioId { get; private set; }
+    public Guid UsuarioId { get; private set; }
     [JsonIgnore]
     public Usuario? Usuarios { get; private set; }
 

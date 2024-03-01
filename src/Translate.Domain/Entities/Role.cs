@@ -6,11 +6,11 @@ namespace Translate.Domain.Entities;
 
 public sealed class Role
 {
-    public Role(UsuarioRoleEnum id, string tipo, string descricao, bool isAtivo, DateTime data)
+    public Role(UsuarioRoleEnum roleId, string tipo, string descricao, bool isAtivo, DateTime data)
     {
-        ValidarParamsEntidade(GetType().Name, [id, tipo], nameof(id), nameof(tipo));
+        ValidarParamsEntidade(GetType().Name, [roleId, tipo], nameof(roleId), nameof(tipo));
 
-        Id = id;
+        RoleId = roleId;
         Tipo = tipo;
         Descricao = descricao;
         IsAtivo = isAtivo;
@@ -18,7 +18,7 @@ public sealed class Role
     }
 
     [Key]
-    public UsuarioRoleEnum Id { get; private set; }
+    public UsuarioRoleEnum RoleId { get; private set; }
 
     public string Tipo { get; private set; }
 

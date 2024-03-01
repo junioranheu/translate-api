@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Translate.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Translate.Infrastructure.Data;
 namespace Translate.Infrastructure.Migrations
 {
     [DbContext(typeof(TranslateContext))]
-    partial class TranslateContextModelSnapshot : ModelSnapshot
+    [Migration("20240301154643_FixEntitadeUsuarios")]
+    partial class FixEntitadeUsuarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,7 +27,7 @@ namespace Translate.Infrastructure.Migrations
 
             modelBuilder.Entity("Translate.Domain.Entities.Frase", b =>
                 {
-                    b.Property<Guid>("FraseId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -41,14 +44,14 @@ namespace Translate.Infrastructure.Migrations
                     b.Property<int>("QtdCaracteres")
                         .HasColumnType("int");
 
-                    b.HasKey("FraseId");
+                    b.HasKey("Id");
 
                     b.ToTable("Frases");
                 });
 
             modelBuilder.Entity("Translate.Domain.Entities.Role", b =>
                 {
-                    b.Property<int>("RoleId")
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Data")
@@ -65,14 +68,14 @@ namespace Translate.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("RoleId");
+                    b.HasKey("Id");
 
                     b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Translate.Domain.Entities.Usuario", b =>
                 {
-                    b.Property<Guid>("UsuarioId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -101,7 +104,7 @@ namespace Translate.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("UsuarioId");
+                    b.HasKey("Id");
 
                     b.HasIndex("Email");
 
@@ -112,7 +115,7 @@ namespace Translate.Infrastructure.Migrations
 
             modelBuilder.Entity("Translate.Domain.Entities.UsuarioRole", b =>
                 {
-                    b.Property<Guid>("UsuarioRoleId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -125,7 +128,7 @@ namespace Translate.Infrastructure.Migrations
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("UsuarioRoleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 

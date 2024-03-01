@@ -20,7 +20,7 @@ public class FraseRepository(TranslateContext context) : IFraseRepository
 
     public async Task Deletar(Guid id)
     {
-        var item = await _context.Frases.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+        var item = await _context.Frases.Where(x => x.FraseId == id).AsNoTracking().FirstOrDefaultAsync();
 
         if (item is null)
         {
@@ -40,7 +40,7 @@ public class FraseRepository(TranslateContext context) : IFraseRepository
     {
         var result = await _context.Frases.
                      Where(x =>
-                        (entidade.Id == Guid.Empty || x.Id == entidade.Id) &&
+                        (entidade.FraseId == Guid.Empty || x.FraseId == entidade.FraseId) &&
                         (entidade.Conteudo.IsNullOrEmpty() || x.Conteudo.Contains(entidade.Conteudo)) &&
                         (!Enum.IsDefined(entidade.Idioma) || x.Idioma == entidade.Idioma)
                      ).AsNoTracking().FirstOrDefaultAsync();
@@ -50,7 +50,7 @@ public class FraseRepository(TranslateContext context) : IFraseRepository
 
     public async Task Atualizar(Frase input)
     {
-        var item = await _context.Frases.Where(x => x.Id == input.Id).AsNoTracking().FirstOrDefaultAsync();
+        var item = await _context.Frases.Where(x => x.FraseId == input.FraseId).AsNoTracking().FirstOrDefaultAsync();
 
         if (item is null)
         {
@@ -58,7 +58,7 @@ public class FraseRepository(TranslateContext context) : IFraseRepository
         }
 
         var update = new Frase(
-            id: item.Id,
+            fraseId: item.FraseId,
             conteudo: input.Conteudo ?? item.Conteudo,
             idioma: input.Idioma is not IdiomasEnum.Default ? input.Idioma : item.Idioma,
             data: item.Data

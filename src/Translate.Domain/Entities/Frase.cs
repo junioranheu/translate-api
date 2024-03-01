@@ -6,11 +6,11 @@ namespace Translate.Domain.Entities;
 
 public sealed class Frase
 {
-    public Frase(Guid id, string conteudo, IdiomasEnum idioma, DateTime data)
+    public Frase(Guid fraseId, string conteudo, IdiomasEnum idioma, DateTime data)
     {
         ValidarParamsEntidade(GetType().Name, [conteudo, idioma], nameof(conteudo), nameof(idioma));
 
-        Id = id;
+        FraseId = fraseId;
         Conteudo = conteudo;
         Idioma = idioma;
         QtdCaracteres = conteudo.Length;
@@ -18,7 +18,7 @@ public sealed class Frase
     }
 
     [Key]
-    public Guid Id { get; private set; }
+    public Guid FraseId { get; private set; }
 
     public string Conteudo { get; private set; }
 

@@ -1,16 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Translate.Domain.Consts;
+using Translate.Domain.Enums;
+using Translate.Infrastructure.Data;
+using Translate.Infrastructure.Seed;
+using static junioranheu_utils_package.Fixtures.Get;
 
 namespace Translate.API;
 
 public static class DependencyAppConfiguration
 {
-    public static WebApplication UseAppConfiguration(this WebApplication app, WebApplicationBuilder builder)
+    public static async Task<WebApplication> UseAppConfigurationAsync(this WebApplication app, WebApplicationBuilder builder)
     {
         using IServiceScope scope = app.Services.CreateScope();
         IServiceProvider services = scope.ServiceProvider;
 
+        await DBInitialize(app, services, isInitialize: true);
         AddSwagger(app);
         AddHttpsRedirection(app);
         AddCors(app, builder);
@@ -18,6 +23,30 @@ public static class DependencyAppConfiguration
         AddAuth(app);
 
         return app;
+    }
+
+    private static async Task DBInitialize(WebApplication app, IServiceProvider services, bool isInitialize)
+    {
+        if (!app.Environment.IsDevelopment())
+        {
+            return;
+        }
+
+        if (!isInitialize)
+        {
+            return;
+        }
+
+        try
+        {
+            TranslateContext context = services.GetRequiredService<TranslateContext>();
+            await DbInitializer.Initialize(context, isAplicarMigrations: false, isResetar: true);
+        }
+        catch (Exception ex)
+        {
+            app.Logger.LogError(ex, "{detalhes}", ObterDescricaoEnum(CodigoErroEnum.ErroDBInitialize));
+            throw new Exception($"{ObterDescricaoEnum(CodigoErroEnum.ErroDBInitialize)}: {ex.Message}");
+        }
     }
 
     private static void AddSwagger(WebApplication app)

@@ -8,11 +8,11 @@ namespace Translate.Domain.Entities;
 [Index(nameof(NomeUsuarioSistema))]
 public sealed class Usuario
 {
-    public Usuario(Guid id, string nomeCompleto, string nomeUsuarioSistema, string email, string senha, bool isAtivo, bool isLatest, DateTime data)
+    public Usuario(Guid usuarioId, string nomeCompleto, string nomeUsuarioSistema, string email, string senha, bool isAtivo, bool isLatest, DateTime data)
     {
         ValidarParamsEntidade(GetType().Name, [nomeCompleto, nomeUsuarioSistema, senha], nameof(nomeCompleto), nameof(nomeUsuarioSistema), nameof(senha));
 
-        Id = id;
+        UsuarioId = usuarioId;
         NomeCompleto = nomeCompleto;
         NomeUsuarioSistema = nomeUsuarioSistema;
         Email = email;
@@ -23,7 +23,7 @@ public sealed class Usuario
     }
 
     [Key]
-    public Guid Id { get; private set; }
+    public Guid UsuarioId { get; private set; }
 
     public string NomeCompleto { get; private set; }
 

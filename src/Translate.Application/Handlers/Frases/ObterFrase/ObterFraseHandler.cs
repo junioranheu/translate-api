@@ -14,7 +14,7 @@ public class ObterFraseHandler(IFraseRepository repository) : IRequestHandler<Ob
     public async Task<ObterFraseResponse> Handle(ObterFraseRequest command, CancellationToken cancellationToken)
     {
         var entidade = new Frase(
-            id: command.Id,
+            fraseId: command.FraseId,
             conteudo: command.Conteudo,
             idioma: command.Idioma,
             data: DateTime.MinValue
@@ -24,7 +24,7 @@ public class ObterFraseHandler(IFraseRepository repository) : IRequestHandler<Ob
 
         var result = new ObterFraseResponse()
         {
-            Id = frase.Id,
+            FraseId = frase.FraseId,
             Conteudo = frase.Conteudo,
             Idioma = frase.Idioma,
             Data = frase.Data

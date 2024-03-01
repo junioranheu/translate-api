@@ -12,7 +12,7 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
     public async Task<CriarFraseResponse> Handle(CriarFraseRequest command, CancellationToken cancellationToken)
     {
         var entidade = new Domain.Entities.Frase(
-            id: Guid.NewGuid(),
+            fraseId: Guid.NewGuid(),
             conteudo: command.Conteudo,
             idioma: command.Idioma,
             data: GerarHorarioBrasilia()

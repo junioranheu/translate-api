@@ -99,6 +99,9 @@ public enum CodigoErroEnum
 
     #region 500
     [Description("Houve um erro interno")]
-    ErroInterno = 500
+    ErroInterno = 500,
+
+    [Description("Houve um problema ao resetar a base de dados")]
+    ErroDBInitialize = 510,
     #endregion
 }

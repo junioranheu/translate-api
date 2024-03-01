@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Translate.Domain.Entities;
+using Translate.Domain.Enums;
 using Translate.Infrastructure.Data;
 
 namespace Translate.Infrastructure.Repositories.Frases;
@@ -47,18 +48,23 @@ public class FraseRepository(TranslateContext context) : IFraseRepository
         return result;
     }
 
-    public async Task Atualizar(Guid id)
+    public async Task Atualizar(Frase input)
     {
-        var item = await _context.Frases.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+        var item = await _context.Frases.Where(x => x.Id == input.Id).AsNoTracking().FirstOrDefaultAsync();
 
         if (item is null)
         {
             return;
         }
 
-        // item.Name = name;
-        // item.Email = email;
+        var update = new Frase(
+            id: item.Id,
+            conteudo: input.Conteudo ?? item.Conteudo,
+            idioma: input.Idioma is not IdiomasEnum.Default ? input.Idioma : item.Idioma,
+            data: item.Data
+        );
 
+        _context.Update(update);
         await _context.SaveChangesAsync();
     }
 }

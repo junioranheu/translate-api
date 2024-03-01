@@ -20,10 +20,6 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
 
         await _repository.Criar(entidade);
 
-        //// Envia E-mail de boas-vindas;
-        //_emailService.Send(customer.Name, customer.Email);
-
-        // Retorna a resposta;
         var result = new CriarFraseResponse
         {
             Conteudo = entidade.Conteudo,

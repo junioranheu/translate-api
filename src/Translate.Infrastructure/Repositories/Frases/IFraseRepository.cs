@@ -4,7 +4,7 @@ namespace Translate.Infrastructure.Repositories.Frases
 {
     public interface IFraseRepository
     {
-        Task Atualizar(Guid id);
+        Task Atualizar(Frase input);
         Task<Frase> Criar(Frase input);
         Task Deletar(Guid id);
         Task<Frase?> Obter(Frase input);

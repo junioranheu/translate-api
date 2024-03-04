@@ -22,6 +22,15 @@ public sealed class Usuario
         Data = data;
     }
 
+    public Usuario(Guid usuarioId, string email)
+    {
+        UsuarioId = usuarioId;
+        NomeCompleto = string.Empty;
+        NomeUsuarioSistema = string.Empty;
+        Email = email;
+        Senha = string.Empty;
+    }
+
     [Key]
     public Guid UsuarioId { get; private set; }
 

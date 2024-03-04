@@ -15,7 +15,7 @@ public static class DependencyAppConfiguration
         using IServiceScope scope = app.Services.CreateScope();
         IServiceProvider services = scope.ServiceProvider;
 
-        await DBInitialize(app, services, isInitialize: true);
+        await DBInitialize(app, services);
         AddSwagger(app);
         AddHttpsRedirection(app);
         AddCors(app, builder);
@@ -25,14 +25,9 @@ public static class DependencyAppConfiguration
         return app;
     }
 
-    private static async Task DBInitialize(WebApplication app, IServiceProvider services, bool isInitialize)
+    private static async Task DBInitialize(WebApplication app, IServiceProvider services)
     {
         if (!app.Environment.IsDevelopment())
-        {
-            return;
-        }
-
-        if (!isInitialize)
         {
             return;
         }
@@ -40,7 +35,7 @@ public static class DependencyAppConfiguration
         try
         {
             TranslateContext context = services.GetRequiredService<TranslateContext>();
-            await DbInitializer.Initialize(context, isAplicarMigrations: false, isAplicarSeed: true);
+            await DbInitializer.Initialize(context);
         }
         catch (Exception ex)
         {

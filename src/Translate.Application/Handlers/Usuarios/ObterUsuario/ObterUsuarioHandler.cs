@@ -2,6 +2,7 @@
 using Translate.Application.Commands.Usuarios.ObterUsuario;
 using Translate.Domain.Entities;
 using Translate.Domain.Enums;
+using Translate.Infrastructure.Repositories.Usuarios;
 using static junioranheu_utils_package.Fixtures.Get;
 
 namespace Translate.Application.Handlers.Usuarios.ObterUsuario;
@@ -14,13 +15,7 @@ public class ObterUsuarioHandler(IUsuarioRepository repository) : IRequestHandle
     {
         var entidade = new Usuario(
             usuarioId: command.UsuarioId,
-            nomeCompleto: string.Empty,
-            nomeUsuarioSistema: string.Empty,
-            email: command.Email,
-            senha: string.Empty,
-            isAtivo: true,
-            isLatest: true,
-            data: DateTime.MinValue
+            email: command.Email
         );
 
         var linq = await _repository.Obter(entidade) ?? throw new Exception(ObterDescricaoEnum(CodigoErroEnum.NaoEncontrado));

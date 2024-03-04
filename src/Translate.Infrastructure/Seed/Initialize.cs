@@ -9,8 +9,11 @@ namespace Translate.Infrastructure.Seed;
 
 public static class DbInitializer
 {
-    public static async Task Initialize(TranslateContext context, bool isAplicarMigrations, bool isAplicarSeed)
+    public static async Task Initialize(TranslateContext context)
     {
+        const bool isAplicarMigrations = false;
+        const bool isAplicarSeed = false;
+
         context.Database.SetCommandTimeout(600);
         // string script : context.Database.GenerateCreateScript();
 
@@ -21,7 +24,7 @@ public static class DbInitializer
 
         if (isAplicarSeed)
         {
-           await Seed(context, GerarHorarioBrasilia());
+            await Seed(context, GerarHorarioBrasilia());
         }
     }
 

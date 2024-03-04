@@ -7,9 +7,9 @@ namespace Translate.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class FraseController : ControllerBase
+public class FrasesController : ControllerBase
 {
-    public FraseController()
+    public FrasesController()
     {
 
     }

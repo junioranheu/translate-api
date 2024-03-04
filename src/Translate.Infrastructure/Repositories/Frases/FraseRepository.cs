@@ -20,14 +20,14 @@ public class FraseRepository(TranslateContext context) : IFraseRepository
 
     public async Task Deletar(Guid id)
     {
-        var item = await _context.Frases.Where(x => x.FraseId == id).AsNoTracking().FirstOrDefaultAsync();
+        var linq = await _context.Frases.Where(x => x.FraseId == id).AsNoTracking().FirstOrDefaultAsync();
 
-        if (item is null)
+        if (linq is null)
         {
             return;
         }
 
-        _context.Frases.Remove(item);
+        _context.Frases.Remove(linq);
         await _context.SaveChangesAsync();
     }
 
@@ -38,30 +38,30 @@ public class FraseRepository(TranslateContext context) : IFraseRepository
 
     public async Task<Frase?> Obter(Frase entidade)
     {
-        var result = await _context.Frases.
-                     Where(x =>
-                        (entidade.FraseId == Guid.Empty || x.FraseId == entidade.FraseId) &&
-                        (entidade.Conteudo.IsNullOrEmpty() || x.Conteudo.Contains(entidade.Conteudo)) &&
-                        (!Enum.IsDefined(entidade.Idioma) || x.Idioma == entidade.Idioma)
-                     ).AsNoTracking().FirstOrDefaultAsync();
+        var linq = await _context.Frases.
+                   Where(x =>
+                      (entidade.FraseId == Guid.Empty || x.FraseId == entidade.FraseId) &&
+                      (entidade.Conteudo.IsNullOrEmpty() || x.Conteudo.Contains(entidade.Conteudo)) &&
+                      (!Enum.IsDefined(entidade.Idioma) || x.Idioma == entidade.Idioma)
+                   ).AsNoTracking().FirstOrDefaultAsync();
 
-        return result;
+        return linq;
     }
 
     public async Task Atualizar(Frase input)
     {
-        var item = await _context.Frases.Where(x => x.FraseId == input.FraseId).AsNoTracking().FirstOrDefaultAsync();
+        var linq = await _context.Frases.Where(x => x.FraseId == input.FraseId).AsNoTracking().FirstOrDefaultAsync();
 
-        if (item is null)
+        if (linq is null)
         {
             return;
         }
 
         var update = new Frase(
-            fraseId: item.FraseId,
-            conteudo: input.Conteudo ?? item.Conteudo,
-            idioma: input.Idioma is not IdiomasEnum.Default ? input.Idioma : item.Idioma,
-            data: item.Data
+            fraseId: linq.FraseId,
+            conteudo: input.Conteudo ?? linq.Conteudo,
+            idioma: input.Idioma is not IdiomasEnum.Default ? input.Idioma : linq.Idioma,
+            data: linq.Data
         );
 
         _context.Update(update);

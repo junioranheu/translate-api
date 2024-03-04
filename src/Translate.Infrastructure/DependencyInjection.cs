@@ -7,6 +7,7 @@ using Translate.Domain.Consts;
 using Translate.Infrastructure.Data;
 using Translate.Infrastructure.Factory.ConnectionFactory;
 using Translate.Infrastructure.Repositories.Frases;
+using Translate.Infrastructure.Repositories.Usuarios;
 
 namespace Translate.Infrastructure;
 
@@ -25,6 +26,7 @@ public static class DependencyInjection
 
     private static void AddRepositories(IServiceCollection services)
     {
+        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         services.AddScoped<IFraseRepository, FraseRepository>();
     }
 

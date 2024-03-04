@@ -20,14 +20,14 @@ public class ObterFraseHandler(IFraseRepository repository) : IRequestHandler<Ob
             data: DateTime.MinValue
         );
 
-        var frase = await _repository.Obter(entidade) ?? throw new Exception(ObterDescricaoEnum(CodigoErroEnum.NaoEncontrado));
+        var linq = await _repository.Obter(entidade) ?? throw new Exception(ObterDescricaoEnum(CodigoErroEnum.NaoEncontrado));
 
         var result = new ObterFraseResponse()
         {
-            FraseId = frase.FraseId,
-            Conteudo = frase.Conteudo,
-            Idioma = frase.Idioma,
-            Data = frase.Data
+            FraseId = linq.FraseId,
+            Conteudo = linq.Conteudo,
+            Idioma = linq.Idioma,
+            Data = linq.Data
         };
 
         return result;

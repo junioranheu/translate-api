@@ -15,7 +15,7 @@ public static class DependencyAppConfiguration
         using IServiceScope scope = app.Services.CreateScope();
         IServiceProvider services = scope.ServiceProvider;
 
-        await DBInitialize(app, services, isInitialize: false);
+        await DBInitialize(app, services, isInitialize: true);
         AddSwagger(app);
         AddHttpsRedirection(app);
         AddCors(app, builder);
@@ -40,12 +40,12 @@ public static class DependencyAppConfiguration
         try
         {
             TranslateContext context = services.GetRequiredService<TranslateContext>();
-            await DbInitializer.Initialize(context, isAplicarMigrations: false, isResetar: true);
+            await DbInitializer.Initialize(context, isAplicarMigrations: false, isAplicarSeed: true);
         }
         catch (Exception ex)
         {
             app.Logger.LogError(ex, "{detalhes}", ObterDescricaoEnum(CodigoErroEnum.ErroDBInitialize));
-            throw new Exception($"{ObterDescricaoEnum(CodigoErroEnum.ErroDBInitialize)}: {ex.Message}");
+            throw new Exception($"{ObterDescricaoEnum(CodigoErroEnum.ErroDBInitialize)}: {ex.InnerException?.ToString() ?? ex.Message}");
         }
     }
 

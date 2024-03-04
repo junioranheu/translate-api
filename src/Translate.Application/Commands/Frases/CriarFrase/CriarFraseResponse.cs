@@ -2,7 +2,7 @@
 
 namespace Translate.Application.Commands.Frases.CriarFrase;
 
-public class CriarFraseResponse
+public sealed class CriarFraseResponse
 {
     public string Conteudo { get; set; } = string.Empty;
     public IdiomasEnum Idioma { get; set; }

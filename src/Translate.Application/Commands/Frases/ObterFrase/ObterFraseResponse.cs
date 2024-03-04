@@ -2,7 +2,7 @@
 
 namespace Translate.Application.Commands.Frases.ObterFrase;
 
-public class ObterFraseResponse
+public sealed class ObterFraseResponse
 {
     public Guid FraseId { get; set; }
     public string Conteudo { get; set; } = string.Empty;

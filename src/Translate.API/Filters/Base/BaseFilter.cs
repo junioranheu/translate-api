@@ -1,71 +1,78 @@
-﻿//using Microsoft.AspNetCore.Mvc.Filters;
-//using System.Security.Claims;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
+using System.Security.Claims;
+using Translate.Application.Commands.Usuarios.ObterUsuario;
+using Translate.Application.Handlers.Usuarios.ObterUsuarioCache;
 
-//namespace Translate.API.Filters.Base;
+namespace Translate.API.Filters.Base;
 
-//public sealed class BaseFilter
-//{
-//    public BaseFilter() { }
+public sealed class BaseFilter
+{
+    public BaseFilter() { }
 
-//    #region usuario_id
-//    internal async Task<int> BaseObterUsuarioId(ActionExecutedContext context)
-//    {
-//        return await BaseObterUsuarioId(context.HttpContext.RequestServices.GetService<IObterUsuarioCacheService>(), BaseObterUsuarioEmail(context));
-//    }
+    #region usuario_id
+    internal async Task<Guid> BaseObterUsuarioId(ActionExecutedContext context)
+    {
+        return await BaseObterUsuarioId(context.HttpContext.RequestServices.GetService<ObterUsuarioCacheHandler>(), BaseObterUsuarioEmail(context));
+    }
 
-//    internal async Task<int> BaseObterUsuarioId(AuthorizationFilterContext context)
-//    {
-//        return await BaseObterUsuarioId(context.HttpContext.RequestServices.GetService<IObterUsuarioCacheService>(), BaseObterUsuarioEmail(context));
-//    }
+    internal async Task<Guid> BaseObterUsuarioId(AuthorizationFilterContext context)
+    {
+        return await BaseObterUsuarioId(context.HttpContext.RequestServices.GetService<ObterUsuarioCacheHandler>(), BaseObterUsuarioEmail(context));
+    }
 
-//    internal async Task<int> BaseObterUsuarioId(ExceptionContext context)
-//    {
-//        return await BaseObterUsuarioId(context.HttpContext.RequestServices.GetService<IObterUsuarioCacheService>(), BaseObterUsuarioEmail(context));
-//    }
+    internal async Task<Guid> BaseObterUsuarioId(ExceptionContext context)
+    {
+        return await BaseObterUsuarioId(context.HttpContext.RequestServices.GetService<ObterUsuarioCacheHandler>(), BaseObterUsuarioEmail(context));
+    }
 
-//    private static async Task<int> BaseObterUsuarioId(IObterUsuarioCacheService? service, string email)
-//    {
-//        if (string.IsNullOrEmpty(email))
-//        {
-//            return 0;
-//        }
+    private static async Task<Guid> BaseObterUsuarioId(ObterUsuarioCacheHandler? service, string email)
+    {
+        if (string.IsNullOrEmpty(email))
+        {
+            return Guid.Empty;
+        }
 
-//        UsuarioOutput? usuario = await service!.Execute(email);
-//        int usuarioId = usuario is not null ? usuario.UsuarioId : 0;
+        var request = new ObterUsuarioRequest() { 
+            UsuarioId = Guid.Empty,
+            Email = email
+        };
 
-//        return usuarioId;
-//    }
-//    #endregion
+        var usuario = await service!.Handle(request, new CancellationTokenSource().Token);
+        Guid usuarioId = usuario is not null ? usuario.UsuarioId : Guid.Empty;
 
-//    #region usuario_email
-//    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Marcar membros como estáticos", Justification = "<Pendente>")]
-//    internal string BaseObterUsuarioEmail(dynamic context)
-//    {
-//        if (context is ActionExecutedContext actionExecutedContext)
-//        {
-//            return ObterUsuarioEmail(actionExecutedContext);
-//        }
-//        else if (context is AuthorizationFilterContext authorizationFilterContext)
-//        {
-//            return ObterUsuarioEmail(authorizationFilterContext);
-//        }
-//        else if (context is ExceptionContext exceptionContext)
-//        {
-//            return ObterUsuarioEmail(exceptionContext);
-//        }
+        return usuarioId;
+    }
+    #endregion
 
-//        return string.Empty;
+    #region usuario_email
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Marcar membros como estáticos", Justification = "<Pendente>")]
+    internal string BaseObterUsuarioEmail(dynamic context)
+    {
+        if (context is ActionExecutedContext actionExecutedContext)
+        {
+            return ObterUsuarioEmail(actionExecutedContext);
+        }
+        else if (context is AuthorizationFilterContext authorizationFilterContext)
+        {
+            return ObterUsuarioEmail(authorizationFilterContext);
+        }
+        else if (context is ExceptionContext exceptionContext)
+        {
+            return ObterUsuarioEmail(exceptionContext);
+        }
 
-//        static string ObterUsuarioEmail(dynamic context)
-//        {
-//            if (context.HttpContext.User.Identity!.IsAuthenticated)
-//            {
-//                string email = context.HttpContext.User.FindFirst(ClaimTypes.Email)!.Value;
-//                return email ?? string.Empty;
-//            }
+        return string.Empty;
 
-//            return string.Empty;
-//        }
-//    }
-//    #endregion
-//}
+        static string ObterUsuarioEmail(dynamic context)
+        {
+            if (context.HttpContext.User.Identity!.IsAuthenticated)
+            {
+                string email = context.HttpContext.User.FindFirst(ClaimTypes.Email)!.Value;
+                return email ?? string.Empty;
+            }
+
+            return string.Empty;
+        }
+    }
+    #endregion
+}

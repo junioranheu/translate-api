@@ -6,7 +6,7 @@ using Translate.Infrastructure.Data;
 
 namespace Translate.Infrastructure.Repositories.Frases;
 
-public class FraseRepository(TranslateContext context) : IFraseRepository
+public sealed class FraseRepository(TranslateContext context) : IFraseRepository
 {
     private readonly TranslateContext _context = context;
 

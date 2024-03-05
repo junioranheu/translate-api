@@ -4,7 +4,7 @@ using Translate.Infrastructure.Data;
 
 namespace Translate.Infrastructure.Repositories.Usuarios;
 
-public class UsuarioRepository(TranslateContext context) : IUsuarioRepository
+public sealed class UsuarioRepository(TranslateContext context) : IUsuarioRepository
 {
     private readonly TranslateContext _context = context;
 

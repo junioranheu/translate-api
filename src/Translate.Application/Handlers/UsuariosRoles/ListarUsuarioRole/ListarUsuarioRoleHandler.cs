@@ -20,19 +20,20 @@ public class ListarUsuarioRoleHandler(IUsuarioRoleRepository repository) : IRequ
             throw new Exception(ObterDescricaoEnum(CodigoErroEnum.NaoEncontrado));
         }
 
-        List<ListarUsuarioRoleResponse> result = [];
+        List<ListarUsuarioRoleResponse> list = [];
 
-        //var result = new ListarUsuarioRoleResponse()
-        //{
-        //    UsuarioId = linq.UsuarioId,
-        //    NomeCompleto = linq.NomeCompleto,
-        //    NomeUsuarioSistema = linq.NomeUsuarioSistema,
-        //    Email = linq.Email,
-        //    IsAtivo = linq.IsAtivo,
-        //    Data = linq.Data,
-        //    UsuarioRoles = linq.UsuarioRoles
-        //};
+        foreach (var item in linq)
+        {
+            var result = new ListarUsuarioRoleResponse()
+            {
+                UsuarioId = item.UsuarioId,
+                RoleId = item.RoleId,
+                Roles = item.Roles
+            };
 
-        return result;
+            list.Add(result);
+        }
+
+        return list;
     }
 }

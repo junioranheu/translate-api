@@ -1,6 +1,8 @@
-﻿namespace Translate.Application.Commands.UsuariosRoles.ListarUsuarioRole;
+﻿using MediatR;
 
-public sealed class ListarUsuarioRoleRequest
+namespace Translate.Application.Commands.UsuariosRoles.ListarUsuarioRole;
+
+public sealed class ListarUsuarioRoleRequest : IRequest<List<ListarUsuarioRoleResponse>>
 {
     public string Email { get; set; } = string.Empty;
 }

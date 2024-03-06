@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Translate.API.Filters.Base;
+using Translate.Application.Commands.UsuariosRoles.ListarUsuarioRole;
+using Translate.Application.Handlers.UsuariosRoles.ListarUsuarioRoleCache;
 using Translate.Domain.Enums;
 
 namespace Translate.API.Filters;
@@ -23,7 +25,7 @@ public sealed class AuthorizeFilter(params UsuarioRoleEnum[] roles) : AuthorizeA
     {
         if (IsUsuarioAutenticado(context))
         {
-            IEnumerable<UsuarioRoleResponse>? usuarioRoles = await ListarUsuarioRoles(context);
+            IEnumerable<ListarUsuarioRoleResponse>? usuarioRoles = await ListarUsuarioRoles(context);
             IsUsuarioTemAcesso(context, usuarioRoles, _rolesNecessarias);
         }
     }
@@ -39,16 +41,22 @@ public sealed class AuthorizeFilter(params UsuarioRoleEnum[] roles) : AuthorizeA
         return true;
     }
 
-    private static async Task<IEnumerable<UsuarioRoleResponse>?> ListarUsuarioRoles(AuthorizationFilterContext context)
+    private static async Task<IEnumerable<ListarUsuarioRoleResponse>?> ListarUsuarioRoles(AuthorizationFilterContext context)
     {
-        var service = context.HttpContext.RequestServices.GetService<IListarUsuarioRolesCacheService>();
+        var service = context.HttpContext.RequestServices.GetService<ListarUsuarioRoleCacheHandler>();
         string? email = new BaseFilter().BaseObterUsuarioEmail(context);
-        IEnumerable<UsuarioRoleResponse>? usuarioRoles = await service!.Execute(email);
+
+        var request = new ListarUsuarioRoleRequest()
+        {
+            Email = email
+        };
+
+        IEnumerable<ListarUsuarioRoleResponse>? usuarioRoles = await service!.Handle(request, new CancellationTokenSource().Token);
 
         return usuarioRoles;
     }
 
-    private static bool IsUsuarioTemAcesso(AuthorizationFilterContext context, IEnumerable<UsuarioRoleResponse>? usuarioRoles, int[] _rolesNecessarias)
+    private static bool IsUsuarioTemAcesso(AuthorizationFilterContext context, IEnumerable<ListarUsuarioRoleResponse>? usuarioRoles, int[] _rolesNecessarias)
     {
         if (_rolesNecessarias.Length == 0)
         {

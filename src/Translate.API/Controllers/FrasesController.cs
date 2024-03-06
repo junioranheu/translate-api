@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Translate.API.Filters;
 using Translate.Application.Commands.Frases.CriarFrase;
 using Translate.Application.Commands.Frases.ObterFrase;
 
@@ -15,16 +16,18 @@ public class FrasesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> ObterAsync([FromServices] IMediator mediator, [FromQuery] ObterFraseRequest command)
+    [AuthorizeFilter]
+    public async Task<IActionResult> Obter([FromServices] IMediator mediator, [FromQuery] ObterFraseRequest command)
     {
         var result = await mediator.Send(command);
         return Ok(result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CriarAsync([FromServices] IMediator mediator, [FromBody] CriarFraseRequest command)
+    [HttpPost
+    [AuthorizeFilter]
+    public async Task<IActionResult> Criar([FromServices] IMediator mediator, [FromBody] CriarFraseRequest command)
     {
-        var response = await mediator.Send(command);
-        return Ok(response);
+        var result = await mediator.Send(command);
+        return Ok(result);
     }
 }

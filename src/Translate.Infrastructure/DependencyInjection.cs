@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using Translate.Domain.Consts;
+using Translate.Infrastructure.Auth.Models;
+using Translate.Infrastructure.Auth.Token;
 using Translate.Infrastructure.Data;
 using Translate.Infrastructure.Factory.ConnectionFactory;
 using Translate.Infrastructure.Repositories.Frases;
@@ -20,6 +22,7 @@ public static class DependencyInjection
     public static IServiceCollection AddDependencyInjectionInfrastructure(this IServiceCollection services, WebApplicationBuilder builder)
     {
         AddRepositories(services);
+        AddServices(services, builder);
         AddAuth(services, builder);
         AddFactory(services);
         AddContext(services, builder);
@@ -34,6 +37,12 @@ public static class DependencyInjection
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         services.AddScoped<IUsuarioRoleRepository, UsuarioRoleRepository>();
         services.AddScoped<IFraseRepository, FraseRepository>();
+    }
+
+    private static void AddServices(IServiceCollection services, WebApplicationBuilder builder)
+    {
+        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+        services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.SectionName));
     }
 
     private static void AddAuth(IServiceCollection services, WebApplicationBuilder builder)

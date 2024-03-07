@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Translate.API.Filters.Base;
 using static junioranheu_utils_package.Fixtures.Get;
 
 namespace Translate.API.Filters;
@@ -8,7 +9,7 @@ public sealed class ErrorFilter(ILogger<ErrorFilter> logger) : ExceptionFilterAt
 {
     private readonly ILogger _logger = logger;
 
-    public override void OnException(ExceptionContext context)
+    public override async Task OnExceptionAsync(ExceptionContext context)
     {
         Exception ex = context.Exception;
         string mensagemErroCompleta = $"Ocorreu um erro ao processar sua requisição. Data: {ObterDetalhesDataHora()}. Caminho: {context.HttpContext.Request.Path}. {(!string.IsNullOrEmpty(ex.InnerException?.Message) ? $"Mais informações: {ex.InnerException.Message}" : $"Mais informações: {ex.Message}")}";
@@ -23,8 +24,10 @@ public sealed class ErrorFilter(ILogger<ErrorFilter> logger) : ExceptionFilterAt
             IsErro = true
         });
 
-        // int usuarioId = await new BaseFilter().BaseObterUsuarioId(context);
+        Guid usuarioId = await new BaseFilter().BaseObterUsuarioId(context);
         // await CriarLog(context, mensagemErroCompleta, usuarioId);
+
+        mensagemErroCompleta += $" - usuarioId: {usuarioId}";
         ExibirILogger(ex, mensagemErroCompleta);
 
         context.Result = detalhes;

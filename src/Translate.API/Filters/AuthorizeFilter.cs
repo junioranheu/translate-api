@@ -44,7 +44,7 @@ public sealed class AuthorizeFilter(params UsuarioRoleEnum[] roles) : AuthorizeA
 
     private static async Task<IEnumerable<ListarUsuarioRoleResponse>?> ListarUsuarioRoles(AuthorizationFilterContext context)
     {
-        var handler = ObterServicoDentroDoFiltro<ListarUsuarioRoleCacheHandler>(context.HttpContext.RequestServices) ?? throw new Exception(ObterDescricaoEnum(CodigoErroEnum.ErroInterno));
+        var service = context.HttpContext.RequestServices.GetService<ListarUsuarioRoleCacheHandler>() ?? throw new Exception(ObterDescricaoEnum(CodigoErroEnum.ErroInterno));
         string? email = new BaseFilter().BaseObterUsuarioEmail(context);
 
         var request = new ListarUsuarioRoleRequest()
@@ -52,8 +52,7 @@ public sealed class AuthorizeFilter(params UsuarioRoleEnum[] roles) : AuthorizeA
             Email = email
         };
 
-        IEnumerable<ListarUsuarioRoleResponse>? usuarioRoles = await handler.Handle(request, new CancellationTokenSource().Token);
-
+        IEnumerable<ListarUsuarioRoleResponse>? usuarioRoles = await service.Handle(request, new CancellationTokenSource().Token);
         return usuarioRoles;
     }
 
@@ -89,10 +88,5 @@ public sealed class AuthorizeFilter(params UsuarioRoleEnum[] roles) : AuthorizeA
         }
 
         return [.. r];
-    }
-
-    private static TService ObterServicoDentroDoFiltro<TService>(IServiceProvider serviceProvider)
-    {
-        return (TService)serviceProvider.GetService(typeof(TService))!;
     }
 }

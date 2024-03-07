@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 using Translate.Domain.Consts;
 using Translate.Infrastructure.Data;
 using Translate.Infrastructure.Factory.ConnectionFactory;
@@ -17,6 +20,7 @@ public static class DependencyInjection
     public static IServiceCollection AddDependencyInjectionInfrastructure(this IServiceCollection services, WebApplicationBuilder builder)
     {
         AddRepositories(services);
+        AddAuth(services, builder);
         AddFactory(services);
         AddContext(services, builder);
         AddSwagger(services);
@@ -30,6 +34,32 @@ public static class DependencyInjection
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         services.AddScoped<IUsuarioRoleRepository, UsuarioRoleRepository>();
         services.AddScoped<IFraseRepository, FraseRepository>();
+    }
+
+    private static void AddAuth(IServiceCollection services, WebApplicationBuilder builder)
+    {
+        services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+             .AddJwtBearer(x =>
+             {
+                 x.RequireHttpsMetadata = !builder.Environment.IsDevelopment();
+                 x.SaveToken = true;
+                 x.IncludeErrorDetails = true;
+                 x.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuerSigningKey = true,
+                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["JwtSettings:Secret"] ?? string.Empty)),
+                     ValidateIssuer = true,
+                     ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                     ValidateAudience = true,
+                     ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                     ValidateLifetime = true,
+                     ClockSkew = TimeSpan.Zero
+                 };
+             });
     }
 
     private static void AddFactory(IServiceCollection services)

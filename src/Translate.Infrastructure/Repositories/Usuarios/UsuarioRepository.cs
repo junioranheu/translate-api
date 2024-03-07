@@ -21,7 +21,7 @@ public sealed class UsuarioRepository(TranslateContext context) : IUsuarioReposi
         return linq;
     }
 
-    public async Task<(Usuario? usuario, string senha)> ObterUsuarioCondicaoArbitraria(Usuario entidade)
+    public async Task<Usuario?> ObterUsuarioCondicaoArbitraria(Usuario entidade)
     {
         var byEmail = await _context.Usuarios.
                       Where(e => e.Email == entidade.Email).
@@ -37,12 +37,12 @@ public sealed class UsuarioRepository(TranslateContext context) : IUsuarioReposi
 
             if (byNomeUsuario is null)
             {
-                return (null, string.Empty);
+                return new Usuario(usuarioId: Guid.Empty, email: string.Empty);
             }
 
-            return (byNomeUsuario, byNomeUsuario.Senha ?? string.Empty);
+            return byNomeUsuario;
         }
 
-        return (byEmail, byEmail.Senha ?? string.Empty);
+        return byEmail;
     }
 }

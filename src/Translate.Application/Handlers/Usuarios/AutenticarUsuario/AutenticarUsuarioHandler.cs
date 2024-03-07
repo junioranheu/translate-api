@@ -19,17 +19,18 @@ public sealed class AutenticarUsuarioHandler(IUsuarioRepository repository, IJwt
     {
         var entidade = new Usuario(
             email: command.Login ?? string.Empty,
-            nomeUsuarioSistema: command.Login ?? string.Empty
+            nomeUsuarioSistema: command.Login ?? string.Empty,
+            senha: string.Empty
         );
 
-        (Usuario? usuario, string senha) = await _repository.ObterUsuarioCondicaoArbitraria(entidade);
+        Usuario? usuario = await _repository.ObterUsuarioCondicaoArbitraria(entidade);
 
         if (usuario is null)
         {
             throw new Exception(ObterDescricaoEnum(CodigoErroEnum.UsuarioNaoEncontrado));
         }
 
-        if (!VerificarCriptografia(senha: command?.Senha ?? string.Empty, senhaCriptografada: senha))
+        if (!VerificarCriptografia(senha: command?.Senha ?? string.Empty, senhaCriptografada: usuario.Senha))
         {
             throw new Exception(ObterDescricaoEnum(CodigoErroEnum.UsuarioSenhaIncorretos));
         }

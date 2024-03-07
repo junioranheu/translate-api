@@ -31,13 +31,13 @@ public sealed class Usuario
         Senha = string.Empty;
     }
 
-    public Usuario( string email, string nomeUsuarioSistema)
+    public Usuario(string email, string nomeUsuarioSistema, string senha)
     {
         UsuarioId = Guid.Empty;
         NomeCompleto = string.Empty;
         NomeUsuarioSistema = nomeUsuarioSistema;
         Email = email;
-        Senha = string.Empty;
+        Senha = senha;
     }
 
     [Key]

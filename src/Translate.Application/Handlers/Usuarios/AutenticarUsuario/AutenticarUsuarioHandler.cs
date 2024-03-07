@@ -23,9 +23,9 @@ public sealed class AutenticarUsuarioHandler(IUsuarioRepository repository, IJwt
             senha: string.Empty
         );
 
-        Usuario? usuario = await _repository.ObterUsuarioCondicaoArbitraria(entidade);
+        Usuario? usuario = await _repository.ObterUsuarioCondicaoArbitraria(entidade); 
 
-        if (usuario is null)
+        if (usuario is null || usuario.UsuarioId == Guid.Empty)
         {
             throw new Exception(ObterDescricaoEnum(CodigoErroEnum.UsuarioNaoEncontrado));
         }
@@ -50,7 +50,12 @@ public sealed class AutenticarUsuarioHandler(IUsuarioRepository repository, IJwt
             Email = usuario.Email,
             IsAtivo = usuario.IsAtivo,
             Data = usuario.Data,
-            UsuarioRoles = usuario.UsuarioRoles is not null && usuario.UsuarioRoles.Any() ? (IEnumerable<ListarUsuarioRoleResponse>)usuario.UsuarioRoles : [],
+            UsuarioRoles = usuario.UsuarioRoles?.Select(role => new ListarUsuarioRoleResponse
+            {
+                UsuarioId = role.UsuarioId,
+                RoleId = role.RoleId,
+                Roles = role.Roles
+            }),
             Token = token
         };
 

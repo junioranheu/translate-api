@@ -21,6 +21,7 @@ public sealed class ListarUsuarioRoleCacheHandler(IMemoryCache memoryCache, IUsu
         if (!_memoryCache.TryGetValue(keyCache, out List<ListarUsuarioRoleResponse>? listaUsuarioRoles))
         {
             var linq = await _repository.Listar(command.Email);
+            var listaUsuarioRolesInner = new List<ListarUsuarioRoleResponse>();
 
             foreach (var item in linq)
             {
@@ -31,9 +32,10 @@ public sealed class ListarUsuarioRoleCacheHandler(IMemoryCache memoryCache, IUsu
                     Roles = item.Roles
                 };
 
-                listaUsuarioRoles?.Add(result);
+                listaUsuarioRolesInner?.Add(result);
             }
 
+            listaUsuarioRoles = listaUsuarioRolesInner; 
             _memoryCache.Set(keyCache, listaUsuarioRoles, TimeSpan.FromMinutes(1));
         }
 

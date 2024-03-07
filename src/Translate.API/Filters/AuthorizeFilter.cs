@@ -5,6 +5,7 @@ using Translate.API.Filters.Base;
 using Translate.Application.Commands.UsuariosRoles.ListarUsuarioRole;
 using Translate.Application.Handlers.UsuariosRoles.ListarUsuarioRoleCache;
 using Translate.Domain.Enums;
+using static junioranheu_utils_package.Fixtures.Get;
 
 namespace Translate.API.Filters;
 
@@ -43,7 +44,7 @@ public sealed class AuthorizeFilter(params UsuarioRoleEnum[] roles) : AuthorizeA
 
     private static async Task<IEnumerable<ListarUsuarioRoleResponse>?> ListarUsuarioRoles(AuthorizationFilterContext context)
     {
-        var service = context.HttpContext.RequestServices.GetService<ListarUsuarioRoleCacheHandler>();
+        var handler = ObterServicoDentroDoFiltro<ListarUsuarioRoleCacheHandler>(context.HttpContext.RequestServices) ?? throw new Exception(ObterDescricaoEnum(CodigoErroEnum.ErroInterno));
         string? email = new BaseFilter().BaseObterUsuarioEmail(context);
 
         var request = new ListarUsuarioRoleRequest()
@@ -51,7 +52,7 @@ public sealed class AuthorizeFilter(params UsuarioRoleEnum[] roles) : AuthorizeA
             Email = email
         };
 
-        IEnumerable<ListarUsuarioRoleResponse>? usuarioRoles = await service!.Handle(request, new CancellationTokenSource().Token);
+        IEnumerable<ListarUsuarioRoleResponse>? usuarioRoles = await handler.Handle(request, new CancellationTokenSource().Token);
 
         return usuarioRoles;
     }
@@ -88,5 +89,10 @@ public sealed class AuthorizeFilter(params UsuarioRoleEnum[] roles) : AuthorizeA
         }
 
         return [.. r];
+    }
+
+    private static TService ObterServicoDentroDoFiltro<TService>(IServiceProvider serviceProvider)
+    {
+        return (TService)serviceProvider.GetService(typeof(TService))!;
     }
 }

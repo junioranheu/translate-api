@@ -12,6 +12,7 @@ public sealed class UsuarioRoleRepository(TranslateContext context) : IUsuarioRo
     {
         var linq = await _context.UsuariosRoles.
                    Include(u => u.Usuarios).
+                   Include(u => u.Roles).
                    Where(u => u.Usuarios!.Email == email && u.Usuarios.IsAtivo == true).
                    AsNoTracking().ToListAsync();
 

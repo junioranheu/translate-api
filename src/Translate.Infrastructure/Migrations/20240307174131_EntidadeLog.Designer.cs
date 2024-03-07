@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Translate.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Translate.Infrastructure.Data;
 namespace Translate.Infrastructure.Migrations
 {
     [DbContext(typeof(TranslateContext))]
-    partial class TranslateContextModelSnapshot : ModelSnapshot
+    [Migration("20240307174131_EntidadeLog")]
+    partial class EntidadeLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,50 +44,9 @@ namespace Translate.Infrastructure.Migrations
                     b.Property<int>("QtdCaracteres")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("char(36)");
-
                     b.HasKey("FraseId");
 
-                    b.HasIndex("UsuarioId");
-
                     b.ToTable("Frases");
-                });
-
-            modelBuilder.Entity("Translate.Domain.Entities.Log", b =>
-                {
-                    b.Property<Guid>("LogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Endpoint")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Parametros")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("StatusResposta")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TipoRequisicao")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid?>("UsuarioId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("LogId");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("Translate.Domain.Entities.Role", b =>
@@ -173,27 +135,6 @@ namespace Translate.Infrastructure.Migrations
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("UsuariosRoles");
-                });
-
-            modelBuilder.Entity("Translate.Domain.Entities.Frase", b =>
-                {
-                    b.HasOne("Translate.Domain.Entities.Usuario", "Usuarios")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuarios");
-                });
-
-            modelBuilder.Entity("Translate.Domain.Entities.Log", b =>
-                {
-                    b.HasOne("Translate.Domain.Entities.Usuario", "Usuarios")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("Translate.Domain.Entities.UsuarioRole", b =>

@@ -15,6 +15,7 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
             fraseId: Guid.NewGuid(),
             conteudo: command.Conteudo,
             idioma: command.Idioma,
+            usuarioId: command.UsuarioId,
             data: GerarHorarioBrasilia()
         );
 

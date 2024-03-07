@@ -11,7 +11,7 @@ namespace Translate.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UsuariosController : ControllerBase
+public class UsuariosController : BaseController<FrasesController>
 {
     public UsuariosController()
     {

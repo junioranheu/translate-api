@@ -17,6 +17,7 @@ public class ObterFraseHandler(IFraseRepository repository) : IRequestHandler<Ob
             fraseId: command.FraseId,
             conteudo: command.Conteudo,
             idioma: command.Idioma,
+            usuarioId: Guid.Empty,
             data: DateTime.MinValue
         );
 

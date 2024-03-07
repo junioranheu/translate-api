@@ -7,4 +7,5 @@ public sealed class CriarFraseRequest : IRequest<CriarFraseResponse>
 {
     public string Conteudo { get; set; } = string.Empty;
     public IdiomasEnum Idioma { get; set; }
+    public Guid UsuarioId { get; set; } = Guid.Empty; 
 }

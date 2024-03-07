@@ -9,6 +9,8 @@ public class TranslateContext(DbContextOptions<TranslateContext> options) : DbCo
     public DbSet<Role> Roles { get; set; }
     public DbSet<UsuarioRole> UsuariosRoles { get; set; }
 
+    public DbSet<Log> Logs { get; set; }
+
     public DbSet<Frase> Frases { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

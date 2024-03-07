@@ -8,7 +8,7 @@ namespace Translate.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class FrasesController : ControllerBase
+public class FrasesController : BaseController<FrasesController>
 {
     public FrasesController()
     {
@@ -27,6 +27,7 @@ public class FrasesController : ControllerBase
     [AuthorizeFilter]
     public async Task<IActionResult> Criar([FromServices] IMediator mediator, [FromBody] CriarFraseRequest command)
     {
+        command.UsuarioId = await ObterUsuarioId();
         var result = await mediator.Send(command);
         return Ok(result);
     }

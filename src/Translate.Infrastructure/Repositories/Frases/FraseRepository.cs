@@ -61,6 +61,7 @@ public sealed class FraseRepository(TranslateContext context) : IFraseRepository
             fraseId: linq.FraseId,
             conteudo: input.Conteudo ?? linq.Conteudo,
             idioma: input.Idioma is not IdiomasEnum.Default ? input.Idioma : linq.Idioma,
+            usuarioId: input.UsuarioId,
             data: linq.Data
         );
 

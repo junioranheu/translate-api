@@ -23,7 +23,7 @@ public class FrasesController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost
+    [HttpPost]
     [AuthorizeFilter]
     public async Task<IActionResult> Criar([FromServices] IMediator mediator, [FromBody] CriarFraseRequest command)
     {

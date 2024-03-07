@@ -20,4 +20,29 @@ public sealed class UsuarioRepository(TranslateContext context) : IUsuarioReposi
 
         return linq;
     }
+
+    public async Task<(Usuario? usuario, string senha)> ObterUsuarioCondicaoArbitraria(Usuario entidade)
+    {
+        var byEmail = await _context.Usuarios.
+                      Where(e => e.Email == entidade.Email).
+                      Include(ur => ur.UsuarioRoles)!.ThenInclude(r => r.Roles).
+                      AsNoTracking().FirstOrDefaultAsync();
+
+        if (byEmail is null)
+        {
+            var byNomeUsuario = await _context.Usuarios.
+                                Where(n => n.NomeUsuarioSistema == entidade.NomeUsuarioSistema).
+                                Include(ur => ur.UsuarioRoles)!.ThenInclude(r => r.Roles).
+                                AsNoTracking().FirstOrDefaultAsync();
+
+            if (byNomeUsuario is null)
+            {
+                return (null, string.Empty);
+            }
+
+            return (byNomeUsuario, byNomeUsuario.Senha ?? string.Empty);
+        }
+
+        return (byEmail, byEmail.Senha ?? string.Empty);
+    }
 }

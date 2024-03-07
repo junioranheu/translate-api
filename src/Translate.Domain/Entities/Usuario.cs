@@ -31,6 +31,15 @@ public sealed class Usuario
         Senha = string.Empty;
     }
 
+    public Usuario( string email, string nomeUsuarioSistema)
+    {
+        UsuarioId = Guid.Empty;
+        NomeCompleto = string.Empty;
+        NomeUsuarioSistema = nomeUsuarioSistema;
+        Email = email;
+        Senha = string.Empty;
+    }
+
     [Key]
     public Guid UsuarioId { get; private set; }
 

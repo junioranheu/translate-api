@@ -7,7 +7,7 @@ namespace Translate.Domain.Entities;
 
 public sealed class Log
 {
-    public Log(Guid logId, string tipoRequisicao, string endpoint, string parametros, string descricao, int statusResposta, Guid? usuarioId)
+    public Log(Guid logId, string tipoRequisicao, string endpoint, string? parametros, string? descricao, int statusResposta, Guid? usuarioId)
     {
         ValidarParamsEntidade(GetType().Name, [tipoRequisicao, endpoint, statusResposta], nameof(tipoRequisicao), nameof(endpoint), nameof(statusResposta));
 

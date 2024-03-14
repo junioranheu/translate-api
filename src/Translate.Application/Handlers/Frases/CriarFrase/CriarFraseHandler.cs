@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Translate.Application.Commands.Frases.CriarFrase;
+using Translate.Domain.Entities;
 using Translate.Infrastructure.Repositories.Frases;
 using static junioranheu_utils_package.Fixtures.Get;
 
@@ -11,7 +12,7 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
 
     public async Task<CriarFraseResponse> Handle(CriarFraseRequest command, CancellationToken cancellationToken)
     {
-        var entidade = new Domain.Entities.Frase(
+        var entidade = new Frase(
             fraseId: Guid.NewGuid(),
             conteudo: command.Conteudo,
             idioma: command.Idioma,

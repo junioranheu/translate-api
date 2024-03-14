@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Translate.API.Filters.Base;
+using Translate.Application.Commands.Logs.CriarLog;
+using Translate.Application.Handlers.Logs.CriarLog;
 using static junioranheu_utils_package.Fixtures.Get;
 
 namespace Translate.API.Filters;
 
-public sealed class ErrorFilter(ILogger<ErrorFilter> logger) : ExceptionFilterAttribute
+public sealed class ErrorFilter(ILogger<ErrorFilter> logger, CriarLogHandler criarLogHandler) : ExceptionFilterAttribute
 {
     private readonly ILogger _logger = logger;
+    private readonly CriarLogHandler _criarLogHandler = criarLogHandler;
 
     public override async Task OnExceptionAsync(ExceptionContext context)
     {
@@ -25,7 +28,7 @@ public sealed class ErrorFilter(ILogger<ErrorFilter> logger) : ExceptionFilterAt
         });
 
         Guid usuarioId = await new BaseFilter().BaseObterUsuarioId(context);
-        // await CriarLog(context, mensagemErroCompleta, usuarioId);
+        await CriarLog(context, mensagemErroCompleta, usuarioId);
 
         mensagemErroCompleta += $" - usuarioId: {usuarioId}";
         ExibirILogger(ex, mensagemErroCompleta);
@@ -34,20 +37,20 @@ public sealed class ErrorFilter(ILogger<ErrorFilter> logger) : ExceptionFilterAt
         context.ExceptionHandled = true;
     }
 
-    //private async Task CriarLog(ExceptionContext context, string mensagemErro, int? usuarioId)
-    //{
-    //    LogInput log = new()
-    //    {
-    //        TipoRequisicao = context.HttpContext.Request.Method ?? string.Empty,
-    //        Endpoint = context.HttpContext.Request.Path.ToString() ?? string.Empty,
-    //        Parametros = string.Empty,
-    //        Descricao = mensagemErro,
-    //        StatusResposta = StatusCodes.Status500InternalServerError,
-    //        UsuarioId = usuarioId > 0 ? usuarioId : null
-    //    };
+    private async Task CriarLog(ExceptionContext context, string mensagemErro, Guid? usuarioId)
+    {
+        CriarLogRequest request = new()
+        {
+            TipoRequisicao = context.HttpContext.Request.Method ?? string.Empty,
+            Endpoint = context.HttpContext.Request.Path.ToString() ?? string.Empty,
+            Parametros = string.Empty,
+            Descricao = mensagemErro,
+            StatusResposta = StatusCodes.Status500InternalServerError,
+            UsuarioId = usuarioId != Guid.Empty ? usuarioId : null
+        };
 
-    //    await _criarLogUseCase.Execute(log);
-    //}
+        await _criarLogHandler.Handle(request, new CancellationTokenSource().Token);
+    }
 
     private void ExibirILogger(Exception ex, string mensagemErro)
     {

@@ -12,6 +12,7 @@ using Translate.Infrastructure.Auth.Token;
 using Translate.Infrastructure.Data;
 using Translate.Infrastructure.Factory.ConnectionFactory;
 using Translate.Infrastructure.Repositories.Frases;
+using Translate.Infrastructure.Repositories.Logs;
 using Translate.Infrastructure.Repositories.Usuarios;
 using Translate.Infrastructure.Repositories.UsuariosRoles;
 
@@ -34,6 +35,7 @@ public static class DependencyInjection
 
     private static void AddRepositories(IServiceCollection services)
     {
+        services.AddScoped<ILogRepository, LogRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         services.AddScoped<IUsuarioRoleRepository, UsuarioRoleRepository>();
         services.AddScoped<IFraseRepository, FraseRepository>();

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Translate.Application.Commands.Logs.CriarLog;
 using Translate.Domain.Entities;
+using Translate.Infrastructure.Repositories.Logs;
 using static junioranheu_utils_package.Fixtures.Get;
 
 namespace Translate.Application.Handlers.Logs.CriarLog;

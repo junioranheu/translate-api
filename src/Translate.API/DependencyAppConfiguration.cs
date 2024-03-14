@@ -35,7 +35,7 @@ public static class DependencyAppConfiguration
         try
         {
             TranslateContext context = services.GetRequiredService<TranslateContext>();
-            await DbInitializer.Initialize(context);
+            await DbInitializer.Initialize(context, isAplicarMigrations: false, isAplicarSeed: false);
         }
         catch (Exception ex)
         {

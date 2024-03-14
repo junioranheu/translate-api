@@ -40,7 +40,7 @@ public static class DependencyInjection
     {
         services.AddControllers(x =>
         {
-            // x.Filters.Add<RequestFilter>();
+            x.Filters.Add<RequestFilter>();
             x.Filters.Add<ErrorFilter>();
         }).
             AddJsonOptions(x =>

@@ -9,13 +9,10 @@ namespace Translate.Infrastructure.Seed;
 
 public static class DbInitializer
 {
-    public static async Task Initialize(TranslateContext context)
+    public static async Task Initialize(TranslateContext context, bool isAplicarMigrations, bool isAplicarSeed)
     {
-        const bool isAplicarMigrations = false;
-        const bool isAplicarSeed = false;
-
         context.Database.SetCommandTimeout(600);
-        // string script : context.Database.GenerateCreateScript();
+        // string script : context.Database.GenerateCreateScript(); 
 
         if (isAplicarMigrations)
         {

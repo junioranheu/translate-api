@@ -31,7 +31,7 @@ public sealed class FraseRepository(TranslateContext context) : IFraseRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<ICollection<Frase>> ObterTodos()
+    public async Task<ICollection<Frase>> Listar()
     {
         return await _context.Frases.AsNoTracking().ToListAsync();
     }

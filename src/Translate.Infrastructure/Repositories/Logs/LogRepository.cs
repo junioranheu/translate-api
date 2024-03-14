@@ -1,4 +1,5 @@
-﻿using Translate.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Translate.Domain.Entities;
 using Translate.Infrastructure.Data;
 
 namespace Translate.Infrastructure.Repositories.Logs;
@@ -15,8 +16,8 @@ public sealed class LogRepository(TranslateContext context) : ILogRepository
         return input;
     }
 
-    //public async Task<ICollection<Frase>> ObterTodos()
-    //{
-    //    return await _context.Frases.AsNoTracking().ToListAsync();
-    //}
+    public async Task<ICollection<Log>> Listar()
+    {
+        return await _context.Logs.Include(u => u.Usuarios).OrderByDescending(l => l.Data).AsNoTracking().ToListAsync();
+    }
 }

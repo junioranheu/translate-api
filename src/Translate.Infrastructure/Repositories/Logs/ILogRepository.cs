@@ -5,5 +5,6 @@ namespace Translate.Infrastructure.Repositories.Logs
     public interface ILogRepository
     {
         Task<Log> Criar(Log input);
+        Task<ICollection<Log>> Listar();
     }
 }

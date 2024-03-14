@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Translate.API.Filters.Base;
-using Translate.Application.Commands.Logs.CriarLog;
-using Translate.Application.Handlers.Logs.CriarLog;
+using Translate.Domain.Entities;
+using Translate.Infrastructure.Repositories.Logs;
 using static junioranheu_utils_package.Fixtures.Get;
 
 namespace Translate.API.Filters;
 
-public sealed class ErrorFilter(ILogger<ErrorFilter> logger, CriarLogHandler criarLogHandler) : ExceptionFilterAttribute
+public sealed class ErrorFilter(ILogger<ErrorFilter> logger, ILogRepository logRepository) : ExceptionFilterAttribute
 {
     private readonly ILogger _logger = logger;
-    private readonly CriarLogHandler _criarLogHandler = criarLogHandler;
+    private readonly ILogRepository _logRepository = logRepository;
 
     public override async Task OnExceptionAsync(ExceptionContext context)
     {
@@ -39,17 +39,17 @@ public sealed class ErrorFilter(ILogger<ErrorFilter> logger, CriarLogHandler cri
 
     private async Task CriarLog(ExceptionContext context, string mensagemErro, Guid? usuarioId)
     {
-        CriarLogRequest request = new()
-        {
-            TipoRequisicao = context.HttpContext.Request.Method ?? string.Empty,
-            Endpoint = context.HttpContext.Request.Path.ToString() ?? string.Empty,
-            Parametros = string.Empty,
-            Descricao = mensagemErro,
-            StatusResposta = StatusCodes.Status500InternalServerError,
-            UsuarioId = usuarioId != Guid.Empty ? usuarioId : null
-        };
+        var entidade = new Log(
+            logId: Guid.NewGuid(),
+            tipoRequisicao: context.HttpContext.Request.Method ?? string.Empty,
+            endpoint: context.HttpContext.Request.Path.ToString() ?? string.Empty,
+            parametros: string.Empty,
+            descricao: mensagemErro,
+            statusResposta: StatusCodes.Status500InternalServerError,
+            usuarioId: usuarioId != Guid.Empty ? usuarioId : null
+        );
 
-        await _criarLogHandler.Handle(request, new CancellationTokenSource().Token);
+        await _logRepository.Criar(entidade);
     }
 
     private void ExibirILogger(Exception ex, string mensagemErro)

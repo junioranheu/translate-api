@@ -26,6 +26,7 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
         {
             Conteudo = entidade.Conteudo,
             Idioma = entidade.Idioma,
+            QtdCaracteres = entidade.Conteudo.Length,
             Data = entidade.Data
         };
 

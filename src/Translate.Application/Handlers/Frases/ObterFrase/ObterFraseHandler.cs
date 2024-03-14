@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Translate.Application.Commands.Frases.ObterFrase;
+using Translate.Application.Commands.Usuarios.ObterUsuario;
 using Translate.Domain.Entities;
 using Translate.Domain.Enums;
 using Translate.Infrastructure.Repositories.Frases;
@@ -23,11 +24,28 @@ public class ObterFraseHandler(IFraseRepository repository) : IRequestHandler<Ob
 
         var linq = await _repository.Obter(entidade) ?? throw new Exception(ObterDescricaoEnum(CodigoErroEnum.NaoEncontrado));
 
+        var resultUsuario = new ObterUsuarioResponse();
+
+        if (linq.Usuarios is not null)
+        {
+            resultUsuario = new ObterUsuarioResponse()
+            {
+                UsuarioId = linq.Usuarios.UsuarioId,
+                NomeCompleto = linq.Usuarios.NomeCompleto,
+                NomeUsuarioSistema = linq.Usuarios.NomeUsuarioSistema,
+                Email = linq.Usuarios.Email,
+                IsAtivo = linq.Usuarios.IsAtivo,
+                Data = linq.Usuarios.Data,
+                UsuarioRoles = linq.Usuarios.UsuarioRoles
+            };
+        }
+
         var result = new ObterFraseResponse()
         {
             FraseId = linq.FraseId,
             Conteudo = linq.Conteudo,
             Idioma = linq.Idioma,
+            Usuarios = resultUsuario,
             Data = linq.Data
         };
 

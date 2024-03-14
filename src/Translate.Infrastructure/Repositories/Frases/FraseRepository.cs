@@ -20,7 +20,7 @@ public sealed class FraseRepository(TranslateContext context) : IFraseRepository
 
     public async Task Deletar(Guid id)
     {
-        var linq = await _context.Frases.Where(x => x.FraseId == id).AsNoTracking().FirstOrDefaultAsync();
+        var linq = await _context.Frases.Where(f => f.FraseId == id).AsNoTracking().FirstOrDefaultAsync();
 
         if (linq is null)
         {
@@ -33,16 +33,17 @@ public sealed class FraseRepository(TranslateContext context) : IFraseRepository
 
     public async Task<ICollection<Frase>> Listar()
     {
-        return await _context.Frases.AsNoTracking().ToListAsync();
+        return await _context.Frases.Include(f => f.Usuarios).AsNoTracking().ToListAsync();
     }
 
     public async Task<Frase?> Obter(Frase entidade)
     {
         var linq = await _context.Frases.
-                   Where(x =>
-                      (entidade.FraseId == Guid.Empty || x.FraseId == entidade.FraseId) &&
-                      (entidade.Conteudo.IsNullOrEmpty() || x.Conteudo.Contains(entidade.Conteudo)) &&
-                      (!Enum.IsDefined(entidade.Idioma) || x.Idioma == entidade.Idioma)
+                   Include(f => f.Usuarios).
+                   Where(f =>
+                      (entidade.FraseId == Guid.Empty || f.FraseId == entidade.FraseId) &&
+                      (entidade.Conteudo.IsNullOrEmpty() || f.Conteudo.Contains(entidade.Conteudo)) &&
+                      (!Enum.IsDefined(entidade.Idioma) || f.Idioma == entidade.Idioma)
                    ).AsNoTracking().FirstOrDefaultAsync();
 
         return linq;
@@ -50,7 +51,7 @@ public sealed class FraseRepository(TranslateContext context) : IFraseRepository
 
     public async Task Atualizar(Frase input)
     {
-        var linq = await _context.Frases.Where(x => x.FraseId == input.FraseId).AsNoTracking().FirstOrDefaultAsync();
+        var linq = await _context.Frases.Where(f => f.FraseId == input.FraseId).AsNoTracking().FirstOrDefaultAsync();
 
         if (linq is null)
         {

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Translate.Application.Commands.Logs.ListarLog;
+using Translate.Application.Commands.Usuarios.ObterUsuario;
 using Translate.Domain.Entities;
 using Translate.Domain.Enums;
 using Translate.Infrastructure.Repositories.Logs;
@@ -24,6 +25,22 @@ public class ListarLogHandler(ILogRepository repository) : IRequestHandler<Lista
 
         foreach (var item in linq)
         {
+            var resultUsuario = new ObterUsuarioResponse();
+
+            if (item.Usuarios is not null)
+            {
+                resultUsuario = new ObterUsuarioResponse()
+                {
+                    UsuarioId = item.Usuarios.UsuarioId,
+                    NomeCompleto = item.Usuarios.NomeCompleto,
+                    NomeUsuarioSistema = item.Usuarios.NomeUsuarioSistema,
+                    Email = item.Usuarios.Email,
+                    IsAtivo = item.Usuarios.IsAtivo,
+                    Data = item.Usuarios.Data,
+                    UsuarioRoles = item.Usuarios.UsuarioRoles
+                };
+            }
+
             var result = new ListarLogResponse()
             {
                 LogId = item.LogId,
@@ -33,7 +50,7 @@ public class ListarLogHandler(ILogRepository repository) : IRequestHandler<Lista
                 Descricao = item.Descricao,
                 StatusResposta = item.StatusResposta,
                 UsuarioId = item.UsuarioId,
-                Usuarios = item.Usuarios,
+                Usuarios = resultUsuario,
                 Data = item.Data
             };
 

@@ -1,4 +1,4 @@
-﻿using Translate.Domain.Entities;
+﻿using Translate.Application.Commands.Usuarios.ObterUsuario;
 
 namespace Translate.Application.Commands.Logs.ListarLog;
 
@@ -17,7 +17,7 @@ public sealed class ListarLogResponse
     public int StatusResposta { get;  set; }
 
     public Guid? UsuarioId { get;  set; }
-    public Usuario? Usuarios { get; init; }
+    public ObterUsuarioResponse? Usuarios { get; init; }
 
     public DateTime Data { get;  set; }
 }

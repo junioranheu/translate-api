@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Translate.API.Filters.Base;
-using Translate.Application.Commands.Logs.CriarLog;
-using Translate.Application.Handlers.Logs.CriarLog;
+using Translate.Domain.Entities;
+using Translate.Infrastructure.Repositories.Logs;
 
 namespace Translate.API.Filters;
 
-public sealed class RequestFilter(CriarLogHandler criarLogHandler) : ActionFilterAttribute
+public sealed class RequestFilter(ILogRepository logRepository) : ActionFilterAttribute
 {
-    private readonly CriarLogHandler _criarLogHandler = criarLogHandler;
+    private readonly ILogRepository _logRepository = logRepository;
 
     public override async Task OnActionExecutionAsync(ActionExecutingContext filterContextExecuting, ActionExecutionDelegate next)
     {
@@ -28,17 +28,7 @@ public sealed class RequestFilter(CriarLogHandler criarLogHandler) : ActionFilte
         string parametros = ObterParametrosRequisicao(filterContextExecuting);
         string parametrosNormalizados = NormalizarParametros(parametros);
 
-        CriarLogRequest logRequest = new()
-        {
-            TipoRequisicao = request.Method ?? string.Empty,
-            Endpoint = request.Path.Value ?? string.Empty,
-            Parametros = parametrosNormalizados,
-            Descricao = string.Empty,
-            StatusResposta = statusResposta > 0 ? (int)statusResposta : StatusCodes.Status500InternalServerError,
-            UsuarioId = usuarioId != Guid.Empty ? usuarioId : null
-        };
-
-        await _criarLogHandler.Handle(logRequest, new CancellationTokenSource().Token);
+        await CriarLog(request, statusResposta, parametrosNormalizados, usuarioId);
     }
 
     private static string ObterParametrosRequisicao(ActionExecutingContext filterContextExecuting)
@@ -99,5 +89,20 @@ public sealed class RequestFilter(CriarLogHandler criarLogHandler) : ActionFilte
         {
             parametroJson?.Property(key)?.Remove();
         }
+    }
+
+    private async Task CriarLog(HttpRequest request, int? statusResposta, string parametrosNormalizados, Guid? usuarioId)
+    {
+        var entidade = new Log(
+            logId: Guid.NewGuid(),
+            tipoRequisicao: request.Method ?? string.Empty,
+            endpoint: request.Path.Value ?? string.Empty,
+            parametros: parametrosNormalizados,
+            descricao: string.Empty,
+            statusResposta: statusResposta > 0 ? (int)statusResposta : StatusCodes.Status500InternalServerError,
+            usuarioId: usuarioId != Guid.Empty ? usuarioId : null
+       );
+
+        await _logRepository.Criar(entidade);
     }
 }

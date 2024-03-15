@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Translate.Application.Commands.Frases.CriarFrase;
 using Translate.Domain.Entities;
+using Translate.Domain.Enums;
 using Translate.Infrastructure.Repositories.Frases;
 using static junioranheu_utils_package.Fixtures.Get;
 
@@ -12,6 +13,23 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
 
     public async Task<CriarFraseResponse> Handle(CriarFraseRequest command, CancellationToken cancellationToken)
     {
+        if (command.IdiomaOriginal == command.IdiomaTraduzido)
+        {
+            throw new Exception("Os idiomas devem ser distintos");
+        }
+
+        if (command.IdiomaOriginal == IdiomasEnum.Default)
+        {
+            throw new Exception("O idioma original não é válido");
+        }
+
+        if ( command.IdiomaTraduzido == IdiomasEnum.Default)
+        {
+            throw new Exception("O idioma alvo não é válido");
+        }
+
+        command.FraseTraduzida = "TO_DO_API_TRANSLATE_XD";
+
         var entidade = new Frase(
             fraseId: Guid.NewGuid(),
             fraseOriginal: command.FraseOriginal,

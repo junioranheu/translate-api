@@ -22,6 +22,16 @@ public sealed class Frase
         Data = data;
     }
 
+    public Frase(string fraseOriginal, IdiomasEnum idiomaOriginal, string fraseTraduzida, IdiomasEnum idiomaTraduzido)
+    {
+        FraseOriginal = fraseOriginal;
+        IdiomaOriginal = idiomaOriginal;
+        QtdCaracteresFraseOriginal = fraseOriginal.Length;
+        FraseTraduzida = fraseTraduzida;
+        IdiomaTraduzido = idiomaTraduzido;
+        QtdCaracteresFraseTraduzida = fraseTraduzida.Length;
+    }
+
     [Key]
     public Guid FraseId { get; private set; }
 

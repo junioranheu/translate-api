@@ -4,7 +4,7 @@ namespace Translate.Infrastructure.Repositories.Usuarios
 {
     public interface IUsuarioRepository
     {
-        Task<Usuario?> Obter(Usuario entidade);
-        Task<Usuario?> ObterUsuarioCondicaoArbitraria(Usuario entidade);
+        Task<Usuario?> Obter(Usuario input);
+        Task<Usuario?> ObterUsuarioCondicaoArbitraria(Usuario input);
     }
 }

@@ -31,21 +31,30 @@ public sealed class FraseRepository(TranslateContext context) : IFraseRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<ICollection<Frase>> Listar()
-    {
-        return await _context.Frases.Include(f => f.Usuarios).AsNoTracking().ToListAsync();
-    }
-
-    public async Task<Frase?> Obter(Frase entidade)
+    public async Task<ICollection<Frase>> Listar(Frase input)
     {
         var linq = await _context.Frases.
                    Include(f => f.Usuarios).
                    Where(f =>
-                      (entidade.FraseId == Guid.Empty || f.FraseId == entidade.FraseId) &&
-                      (entidade.FraseOriginal.IsNullOrEmpty() || f.FraseOriginal.Contains(entidade.FraseOriginal)) &&
-                      (!Enum.IsDefined(entidade.IdiomaOriginal) || f.IdiomaOriginal == entidade.IdiomaOriginal) &&
-                      (entidade.FraseTraduzida.IsNullOrEmpty() || f.FraseTraduzida.Contains(entidade.FraseTraduzida)) &&
-                      (!Enum.IsDefined(entidade.IdiomaTraduzido) || f.IdiomaTraduzido == entidade.IdiomaTraduzido) 
+                       (input.FraseOriginal.IsNullOrEmpty() || f.FraseOriginal.Contains(input.FraseOriginal)) &&
+                       (input.IdiomaTraduzido == IdiomasEnum.Default || f.IdiomaOriginal == input.IdiomaOriginal) &&
+                       (input.FraseTraduzida.IsNullOrEmpty() || f.FraseTraduzida.Contains(input.FraseTraduzida)) &&
+                       (input.IdiomaTraduzido == IdiomasEnum.Default || f.IdiomaTraduzido == input.IdiomaTraduzido)
+                   ).AsNoTracking().ToListAsync();
+
+        return linq;
+    }
+
+    public async Task<Frase?> Obter(Frase input)
+    {
+        var linq = await _context.Frases.
+                   Include(f => f.Usuarios).
+                   Where(f =>
+                      (input.FraseId == Guid.Empty || f.FraseId == input.FraseId) &&
+                      (input.FraseOriginal.IsNullOrEmpty() || f.FraseOriginal.Contains(input.FraseOriginal)) &&
+                      (input.IdiomaTraduzido == IdiomasEnum.Default || f.IdiomaOriginal == input.IdiomaOriginal) &&
+                      (input.FraseTraduzida.IsNullOrEmpty() || f.FraseTraduzida.Contains(input.FraseTraduzida)) &&
+                      (input.IdiomaTraduzido == IdiomasEnum.Default || f.IdiomaTraduzido == input.IdiomaTraduzido)
                    ).AsNoTracking().FirstOrDefaultAsync();
 
         return linq;

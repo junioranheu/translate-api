@@ -8,6 +8,6 @@ namespace Translate.Infrastructure.Repositories.Frases
         Task<Frase> Criar(Frase input);
         Task Deletar(Guid id);
         Task<Frase?> Obter(Frase input);
-        Task<ICollection<Frase>> Listar();
+        Task<ICollection<Frase>> Listar(Frase input);
     }
 }

@@ -8,30 +8,30 @@ public sealed class UsuarioRepository(TranslateContext context) : IUsuarioReposi
 {
     private readonly TranslateContext _context = context;
 
-    public async Task<Usuario?> Obter(Usuario entidade)
+    public async Task<Usuario?> Obter(Usuario input)
     {
         var linq = await _context.Usuarios.
                    Include(ur => ur.UsuarioRoles)!.ThenInclude(r => r.Roles).
                    Where(u =>
-                      entidade.UsuarioId != Guid.Empty ? u.UsuarioId == entidade.UsuarioId : true &&
-                      !string.IsNullOrEmpty(entidade.Email) ? u.Email == entidade.Email : true &&
+                      input.UsuarioId != Guid.Empty ? u.UsuarioId == input.UsuarioId : true &&
+                      !string.IsNullOrEmpty(input.Email) ? u.Email == input.Email : true &&
                       u.IsLatest == true
                    ).AsNoTracking().FirstOrDefaultAsync();
 
         return linq;
     }
 
-    public async Task<Usuario?> ObterUsuarioCondicaoArbitraria(Usuario entidade)
+    public async Task<Usuario?> ObterUsuarioCondicaoArbitraria(Usuario input)
     {
         var byEmail = await _context.Usuarios.
-                      Where(e => e.Email == entidade.Email).
+                      Where(e => e.Email == input.Email).
                       Include(ur => ur.UsuarioRoles)!.ThenInclude(r => r.Roles).
                       AsNoTracking().FirstOrDefaultAsync();
 
         if (byEmail is null)
         {
             var byNomeUsuario = await _context.Usuarios.
-                                Where(n => n.NomeUsuarioSistema == entidade.NomeUsuarioSistema).
+                                Where(n => n.NomeUsuarioSistema == input.NomeUsuarioSistema).
                                 Include(ur => ur.UsuarioRoles)!.ThenInclude(r => r.Roles).
                                 AsNoTracking().FirstOrDefaultAsync();
 

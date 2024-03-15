@@ -7,14 +7,17 @@ namespace Translate.Domain.Entities;
 
 public sealed class Frase
 {
-    public Frase(Guid fraseId, string conteudo, IdiomasEnum idioma, Guid usuarioId, DateTime data)
+    public Frase(Guid fraseId, string fraseOriginal, IdiomasEnum idiomaOriginal, string fraseTraduzida, IdiomasEnum idiomaTraduzido, Guid usuarioId, DateTime data)
     {
-        ValidarParamsEntidade(GetType().Name, [conteudo, idioma], nameof(conteudo), nameof(idioma));
+        ValidarParamsEntidade(GetType().Name, [fraseOriginal, idiomaOriginal, fraseTraduzida, idiomaTraduzido], nameof(fraseOriginal), nameof(idiomaOriginal), nameof(fraseTraduzida), nameof(fraseOriginal));
 
         FraseId = fraseId;
-        Conteudo = conteudo;
-        Idioma = idioma;
-        QtdCaracteres = conteudo.Length;
+        FraseOriginal = fraseOriginal;
+        IdiomaOriginal = idiomaOriginal;
+        QtdCaracteresFraseOriginal = fraseOriginal.Length;
+        FraseTraduzida = fraseTraduzida;
+        IdiomaTraduzido = idiomaTraduzido;
+        QtdCaracteresFraseTraduzida = fraseTraduzida.Length;
         UsuarioId = usuarioId;
         Data = data;
     }
@@ -22,11 +25,17 @@ public sealed class Frase
     [Key]
     public Guid FraseId { get; private set; }
 
-    public string Conteudo { get; private set; }
+    public string FraseOriginal { get; private set; }
 
-    public IdiomasEnum Idioma { get; private set; }
+    public IdiomasEnum IdiomaOriginal { get; private set; }
 
-    public int QtdCaracteres { get; private set; }
+    public int QtdCaracteresFraseOriginal { get; private set; }
+
+    public string FraseTraduzida { get; private set; }
+
+    public IdiomasEnum IdiomaTraduzido { get; private set; }
+
+    public int QtdCaracteresFraseTraduzida { get; private set; }
 
     [ForeignKey(nameof(UsuarioId))]
     public Guid UsuarioId { get; private set; }

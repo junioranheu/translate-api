@@ -14,8 +14,10 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
     {
         var entidade = new Frase(
             fraseId: Guid.NewGuid(),
-            conteudo: command.Conteudo,
-            idioma: command.Idioma,
+            fraseOriginal: command.FraseOriginal,
+            idiomaOriginal: command.IdiomaOriginal,
+            fraseTraduzida: command.FraseTraduzida,
+            idiomaTraduzido: command.IdiomaTraduzido,
             usuarioId: command.UsuarioId,
             data: GerarHorarioBrasilia()
         );
@@ -24,9 +26,12 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
 
         var result = new CriarFraseResponse
         {
-            Conteudo = entidade.Conteudo,
-            Idioma = entidade.Idioma,
-            QtdCaracteres = entidade.Conteudo.Length,
+            FraseOriginal = entidade.FraseOriginal,
+            IdiomaOriginal = entidade.IdiomaOriginal,
+            QtdCaracteresFraseOriginal = entidade.FraseOriginal.Length,
+            FraseTraduzida = entidade.FraseTraduzida,
+            IdiomaTraduzido = entidade.IdiomaTraduzido,
+            QtdCaracteresFraseTraduzida = entidade.FraseTraduzida.Length,
             Data = entidade.Data
         };
 

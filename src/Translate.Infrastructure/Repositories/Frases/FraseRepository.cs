@@ -42,8 +42,10 @@ public sealed class FraseRepository(TranslateContext context) : IFraseRepository
                    Include(f => f.Usuarios).
                    Where(f =>
                       (entidade.FraseId == Guid.Empty || f.FraseId == entidade.FraseId) &&
-                      (entidade.Conteudo.IsNullOrEmpty() || f.Conteudo.Contains(entidade.Conteudo)) &&
-                      (!Enum.IsDefined(entidade.Idioma) || f.Idioma == entidade.Idioma)
+                      (entidade.FraseOriginal.IsNullOrEmpty() || f.FraseOriginal.Contains(entidade.FraseOriginal)) &&
+                      (!Enum.IsDefined(entidade.IdiomaOriginal) || f.IdiomaOriginal == entidade.IdiomaOriginal) &&
+                      (entidade.FraseTraduzida.IsNullOrEmpty() || f.FraseTraduzida.Contains(entidade.FraseTraduzida)) &&
+                      (!Enum.IsDefined(entidade.IdiomaTraduzido) || f.IdiomaTraduzido == entidade.IdiomaTraduzido) 
                    ).AsNoTracking().FirstOrDefaultAsync();
 
         return linq;
@@ -60,8 +62,10 @@ public sealed class FraseRepository(TranslateContext context) : IFraseRepository
 
         var update = new Frase(
             fraseId: linq.FraseId,
-            conteudo: input.Conteudo ?? linq.Conteudo,
-            idioma: input.Idioma is not IdiomasEnum.Default ? input.Idioma : linq.Idioma,
+            fraseOriginal: input.FraseOriginal ?? linq.FraseOriginal,
+            idiomaOriginal: input.IdiomaOriginal is not IdiomasEnum.Default ? input.IdiomaOriginal : linq.IdiomaOriginal,
+            fraseTraduzida: input.FraseTraduzida ?? linq.FraseTraduzida,
+            idiomaTraduzido: input.IdiomaTraduzido is not IdiomasEnum.Default ? input.IdiomaTraduzido : linq.IdiomaTraduzido,
             usuarioId: input.UsuarioId,
             data: linq.Data
         );

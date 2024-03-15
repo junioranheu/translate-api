@@ -16,8 +16,10 @@ public class ObterFraseHandler(IFraseRepository repository) : IRequestHandler<Ob
     {
         var entidade = new Frase(
             fraseId: command.FraseId,
-            conteudo: command.Conteudo,
-            idioma: command.Idioma,
+            fraseOriginal: command.FraseOriginal,
+            idiomaOriginal: command.IdiomaOriginal,
+            fraseTraduzida: command.FraseTraduzida,
+            idiomaTraduzido: command.IdiomaTraduzido,
             usuarioId: Guid.Empty,
             data: DateTime.MinValue
         );
@@ -43,8 +45,10 @@ public class ObterFraseHandler(IFraseRepository repository) : IRequestHandler<Ob
         var result = new ObterFraseResponse()
         {
             FraseId = linq.FraseId,
-            Conteudo = linq.Conteudo,
-            Idioma = linq.Idioma,
+            FraseOriginal = linq.FraseOriginal,
+            IdiomaOriginal = linq.IdiomaOriginal,
+            FraseTraduzida = linq.FraseTraduzida,
+            IdiomaTraduzido = linq.IdiomaTraduzido,
             Usuarios = resultUsuario,
             Data = linq.Data
         };

@@ -23,12 +23,13 @@ public class CriarFraseHandler(IFraseRepository repository) : IRequestHandler<Cr
             throw new Exception("O idioma original não é válido");
         }
 
-        if ( command.IdiomaTraduzido == IdiomasEnum.Default)
+        if (command.IdiomaTraduzido == IdiomasEnum.Default)
         {
             throw new Exception("O idioma alvo não é válido");
         }
 
-        command.FraseTraduzida = "TO_DO_API_TRANSLATE_XD";
+        // TO DO: Chamar alguma API para traduzir a frase (command.FraseOriginal);
+        command.FraseTraduzida = GerarLoremIpsum(minWords: 2, maxWords: 5, minSentences: 1, maxSentences: 1, numParagraphs: 1, isAdicionarTagP: false);
 
         var entidade = new Frase(
             fraseId: Guid.NewGuid(),

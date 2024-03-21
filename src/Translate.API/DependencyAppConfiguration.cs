@@ -46,7 +46,9 @@ public static class DependencyAppConfiguration
 
     private static void AddSwagger(WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
+        string isRunningInDocker = Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") ?? string.Empty;
+
+        if (app.Environment.IsDevelopment() || (!string.IsNullOrEmpty(isRunningInDocker) && isRunningInDocker == "true"))
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -55,7 +57,10 @@ public static class DependencyAppConfiguration
                 // c.RoutePrefix = ""; // ***
                 c.DocExpansion(DocExpansion.None);
             });
+        }
 
+        if (app.Environment.IsDevelopment())
+        {
             app.UseDeveloperExceptionPage();
         }
     }

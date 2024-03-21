@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Translate.API.Filters;
 using Translate.Application.Commands.Logs.ListarLog;
 
 namespace Translate.API.Controllers;
@@ -15,7 +14,6 @@ public class LogsController : BaseController<LogsController>
     }
 
     [HttpGet]
-    [AuthorizeFilter]
     public async Task<IActionResult> Listar([FromServices] IMediator mediator, [FromQuery] ListarLogRequest command)
     {
         var result = await mediator.Send(command);

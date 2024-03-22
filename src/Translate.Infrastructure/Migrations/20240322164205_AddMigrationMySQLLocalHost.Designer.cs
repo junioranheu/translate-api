@@ -12,8 +12,8 @@ using Translate.Infrastructure.Data;
 namespace Translate.Infrastructure.Migrations
 {
     [DbContext(typeof(TranslateContext))]
-    [Migration("20240307181141_EntidadeLog4")]
-    partial class EntidadeLog4
+    [Migration("20240322164205_AddMigrationMySQLLocalHost")]
+    partial class AddMigrationMySQLLocalHost
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,17 +31,27 @@ namespace Translate.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("Conteudo")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("Data")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Idioma")
+                    b.Property<string>("FraseOriginal")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FraseTraduzida")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("IdiomaOriginal")
                         .HasColumnType("int");
 
-                    b.Property<int>("QtdCaracteres")
+                    b.Property<int>("IdiomaTraduzido")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QtdCaracteresFraseOriginal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QtdCaracteresFraseTraduzida")
                         .HasColumnType("int");
 
                     b.Property<Guid>("UsuarioId")
@@ -125,7 +135,7 @@ namespace Translate.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<bool>("IsAtivo")
                         .HasColumnType("tinyint(1)");
@@ -139,7 +149,7 @@ namespace Translate.Infrastructure.Migrations
 
                     b.Property<string>("NomeUsuarioSistema")
                         .IsRequired()
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Senha")
                         .IsRequired()

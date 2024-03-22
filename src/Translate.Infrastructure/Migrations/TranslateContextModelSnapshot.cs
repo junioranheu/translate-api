@@ -132,7 +132,7 @@ namespace Translate.Infrastructure.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<bool>("IsAtivo")
                         .HasColumnType("tinyint(1)");
@@ -146,7 +146,7 @@ namespace Translate.Infrastructure.Migrations
 
                     b.Property<string>("NomeUsuarioSistema")
                         .IsRequired()
-                        .HasColumnType("varchar(95)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Senha")
                         .IsRequired()

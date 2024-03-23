@@ -24,7 +24,7 @@ public class FrasesController : BaseController<FrasesController>
         return Ok(result);
     }
 
-    [HttpPost("listar")]
+    [HttpGet("listar")]
     [AuthorizeFilter]
     public async Task<IActionResult> Listar([FromServices] IMediator mediator, [FromQuery] ListarFraseRequest command)
     {

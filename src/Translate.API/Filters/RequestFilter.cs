@@ -14,6 +14,12 @@ public sealed class RequestFilter(ILogRepository logRepository) : ActionFilterAt
 
     public override async Task OnActionExecutionAsync(ActionExecutingContext filterContextExecuting, ActionExecutionDelegate next)
     {
+        if (filterContextExecuting.HttpContext.Request.Path.ToString().Contains("/Sistemas/seed"))
+        {
+            await next();
+            return;
+        }
+
         if (filterContextExecuting.HttpContext.RequestAborted.IsCancellationRequested)
         {
             filterContextExecuting.Result = new StatusCodeResult(StatusCodes.Status400BadRequest);

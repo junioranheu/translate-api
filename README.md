@@ -6,6 +6,6 @@ Depois passei pro VS do MacOS: ruim (comparado ao do Windows).
 
 Mas enfim, terminei (o básico do básico...) a API no Windows mesmo.
 
-<b>>>>>>>>>>>></b> No final das contas, esse projeto foi super útil porque aprendi uma nova arquitetura/prática seguindo o tutorial de <b>arquitetura CQRS com MediatR</b> do Balta. E também, claro, utilizei <b>Docker</b>.
+<b>>>>>>>>>>>></b> No final das contas, esse projeto foi super útil porque aprendi uma nova arquitetura/prática seguindo o tutorial de <b>arquitetura CQRS com MediatR</b> do Balta. E também, claro, utilizei <b>DockerFile</b> e <b>Docker Compose</b>.
 
 PS: A API tecnicamente se tratava sobre traduzir frases, etc. Mas isso não foi implementado, de fato. Só um CRUD (não literalmente C, R, U, D) das entidades Usuario, UsuarioRole, Role, Log e Frase.

@@ -30,3 +30,8 @@ dotnet add reference ../NomeDoProjeto.Application/NomeDoProjeto.Application.cspr
 
 // Tutorial arquitetura CQRS;
 https://balta.io/blog/aspnet-core-cqrs-mediator
+
+// Tutorial docker;
+- É necessário entrar na pasta do docker-compose
+buildar aplicação: docker-compose up -d --build
+listar todos os containeres: docker container ps

@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+
+  database:
+    image: mysql:8.0.22
+    container_name: mysqldb
+    volumes:
+      - db-volume:/var/lib/mysql 
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: translateapi
+
+  translate.api:
+    image: ${DOCKER_REGISTRY-}translate.api
+    container_name: translate.api
+    build:
+      context: .
+      dockerfile: src/Translate.API/Dockerfile 
+    depends_on: 
+      - database
+    ports:
+      - "8080:8080"
+    restart: always
+    environment: 
+      - ConnectionStrings:DBConnection=server=mysqldb;port=3306;database=translateapi;uid=root;password=root;AllowLoadLocalInfile=true;  
+      - ASPNETCORE_ENVIRONMENT=Development
+
+volumes:
+  db-volume:
